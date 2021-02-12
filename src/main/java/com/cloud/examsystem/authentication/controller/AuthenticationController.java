@@ -76,4 +76,10 @@ public class AuthenticationController {
     public String getHomePage(Model model){
         return "homepage";
     }
+
+//    @GetMapping()
+//    public String Index(){
+//        return "redirect: /login";
+//
+//    }
 }

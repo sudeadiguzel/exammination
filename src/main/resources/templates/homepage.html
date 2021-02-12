@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="tr"
+      layout:decorate="~{admin/admin_layout}"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -11,6 +12,7 @@
         <div class="col-lg-6 px-3 pt-3 pb-5">
             <div class="row">
                 <div class="col-10 mx-auto">
+                    <th:block >f </th:block>
                     <h4 class="text-center text-warning font-weight-light py-4">Hoşgeldiniz</h4>
                 </div>
             </div>
@@ -20,6 +22,7 @@
 
 <th:block layout:fragment="script">
     <!-- Custom js tags goes here -->
+
 </th:block>
 </body>
 </html>
