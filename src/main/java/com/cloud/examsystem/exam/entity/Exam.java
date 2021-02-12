@@ -45,6 +45,4 @@ public class Exam {
 
     private Integer applicationCount;
 
-
-
 }

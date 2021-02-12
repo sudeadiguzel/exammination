@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="sharedTemplates/Layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body layout:fragment="createExamContent">
+    <form method="GET" id="create-form" th:object="${counts}" th:action="@{/instructor/exam/create}" novalidate>
+        <div class="form-group">
+            <label th:for="|questionCount|">Question Count</label>
+            <input type="number" class="form-control" th:id="|questionCount|" th:name="|questionCount|" >
+        </div>
+        <div class="form-group">
+            <label th:for="|optionCount|">Option Count</label>
+            <input type="number" class="form-control" th:id="|optionCount|" th:name="|optionCount|"  >
+        </div>
+        <button type="submit" class="btn btn-squared-default btn-primary">Submit </button>
+    </form>
+
+</body>
+</html>

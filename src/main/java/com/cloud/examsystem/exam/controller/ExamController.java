@@ -27,13 +27,13 @@ public class ExamController {
         model.addAttribute("data", examOpt.get());
         return "/exam/apply/".concat(id.toString());
     }
-
-    @GetMapping("/create")
-    public String createQuestionPage(Model model){
-        model.addAttribute("question_number",3);
-        model.addAttribute("option_number",4);
-        return "exam/create_exam";
-    }
+//
+//    @GetMapping("/create")
+//    public String createQuestionPage(Model model){
+//        model.addAttribute("question_number",3);
+//        model.addAttribute("option_number",4);
+//        return "exam/create_exam";
+//    }
     //@GetMapping("/create")
     //public String createExamPage(Model model){
     //    model.addAttribute("question_number",3);
