@@ -9,6 +9,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,5 +37,14 @@ public class Exam {
     private User user;
 
     private String description;
+
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private Date startDate;
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private Date endDate;
+
+    private Integer applicationCount;
+
+
 
 }
