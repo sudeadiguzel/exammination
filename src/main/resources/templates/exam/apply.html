@@ -1,25 +1,41 @@
 <!doctype html>
 <html lang="tr"
-      xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Sınavı Çöz</title>
 </head>
 <body>
-<div>
-    <div class="row mx-0">
-        <div class="col-lg-6 px-3 pt-3 pb-5">
-            <div class="row">
-                <div class="col-10 mx-auto">
-                    <h4 class="text-center text-warning font-weight-light py-4" th:text="${data.name}"></h4>
+<div class="container">
+    <form method="POST" id="editor-form" th:object="${data}" action="/admin/event/customSave">
+        <div class="card" style="border: 2px solid;" th:each="question: ${data.question}">
+            <div class="card-header">
+
+                <div class="form-group row">
+                    <label for="inputQuestionLabel" class="col-sm-2 col-form-label">Question:</label>
+                    <div class="col-sm-10">
+                        <label type="text" class="form-control" id="inputQuestionLabel"
+                               th:text="${question.number + '-' +question.description}"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" th:each="option: ${question.optionList}">
+                <div id='block-11' style='padding: 5px;'>
+                    <input type='radio' name='option' th:text="${option.content}" id='option-"${i}"'
+                           style='transform: scale(1.6); margin-right: 10px; vertical-align: middle;'/>
+                    <label for='option-"${i}"' id='option-${workplaceService.id}"' th:value="${option.content}"/>
+                    <span id='result-11'></span>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-12 form-group text-right">
+            <button class="btn btn-primary" type="submit">
+                Kaydet
+            </button>
+        </div>
+    </form>
 </div>
 
-<th:block layout:fragment="script">
-    <!-- Custom js tags goes here -->
-</th:block>
 </body>
 </html>
