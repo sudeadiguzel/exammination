@@ -32,13 +32,15 @@ public class ExamController {
     public String createQuestionPage(Model model){
         model.addAttribute("question_number",3);
         model.addAttribute("option_number",4);
-        return "/exam/create_exam";
+        return "exam/create_exam";
     }
     //@GetMapping("/create")
     //public String createExamPage(Model model){
     //    model.addAttribute("question_number",3);
    //     return "/exam/create_exam";
-  //  }
+   // }
+
+
 
 
 }
