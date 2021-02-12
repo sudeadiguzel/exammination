@@ -12,7 +12,7 @@ spring:
   jpa:
     hibernate:
       ##none, validate, update, create, create-drop
-      ddl-auto: create-drop
+      ddl-auto: update
       properties:
         hibernate:
           jdbc:
@@ -22,6 +22,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  resources:
+    static-locations:
+      - classpath:/resources/
+  web:
+    resources:
+      static-locations: /static/**
 logging:
   level:
     org:
