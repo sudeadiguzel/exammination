@@ -74,6 +74,9 @@ public class AuthenticationController {
 
     @GetMapping("/homepage")
     public String getHomePage(Model model){
+        if(!userAuthService.getCurrentUser().isInstructor()){
+            return "redirect:/instructor";
+        }
         return "homepage";
     }
 

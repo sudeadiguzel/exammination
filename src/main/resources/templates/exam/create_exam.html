@@ -2,39 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="sharedTemplates/Layout">
-<head th:replace="Layout :: html_head" />
+<head th:replace="Layout :: html_head"/>
 <body layout:fragment="examContent">
-    <div class="container" >
-        <form>
-        <div class="card" style="border: 2px solid;" th:each="j: ${#numbers.sequence(0, questionCount - 1)}">
-        <div class="card-header">
+<div class="container">
+    <form method="POST" th:action="@{/instructor/a}">
 
+        <div class="card" style="border: 2px solid;" th:name="|question-'${j}'|"
+             th:each="j: ${#numbers.sequence(0, questionCount - 1)}">
+            <div class="card-header">
                 <div class="form-group row">
-                    <label th:for="|question-'${j}'|" class="col-sm-2 col-form-label">Question:</label>
+                    <label th:for="|questionInput-'${j}'|" class="col-sm-2 col-form-label">Question:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" th:id="|question-'${j}'|" placeholder="Question">
+                        <input type="text" th:name="|questionInput-'${j}'|" class="form-control"
+                               th:id="|questionInput-'${j}'|" placeholder="Question">
                     </div>
                 </div>
 
+            </div>
+
+            <div class="card-body" th:each="i: ${#numbers.sequence(0, optionCount - 1)}" th:name="|optionList-'${j}'|">
+                <label style="float:right">Check for answer </label>
+
+                <div id='block-11' style='padding: 5px;'>
+
+                    <!--            <input type='radio' name='option' th:value="${i}" id='option-"${i}"' style='transform: scale(1.6); margin-right: 10px; vertical-align: middle;' />-->
+                    <input th:for='|option-"${i}"|' th:name='|option-"${i}"|' th:id='|option-"${i}"|'
+                           placeholder="Option"></input>
+                    <input type="checkbox" id="flexCheckDefault" th:name='|optionAnswerCheck-"${i}"|' style="float:right">
+                    <span id='result-11'></span>
+                </div>
+                <br>
+                <hr/>
+            </div>
+
         </div>
 
-    <div class="card-body" th:each="i: ${#numbers.sequence(0, optionCount - 1)}" >
-        <label style="float:right" >Check for answer </label>
+        <br>
+        <button type="submit" class="btn btn-outline-primary" style="float:right;">Submit</button>
+        <br>
 
-        <div id='block-11' style='padding: 5px;'>
 
-<!--            <input type='radio' name='option' th:value="${i}" id='option-"${i}"' style='transform: scale(1.6); margin-right: 10px; vertical-align: middle;' />-->
-            <input th:for='|option-"${i}"|' th:id= '|option-"${i}"|' placeholder="Option"></input>
-            <input type="checkbox" id="flexCheckDefault" style="float:right">
-            <span id='result-11'></span>
-        </div>
-        <hr/>
-    </div>
-        </div>
-            <br>
-            <button type="button" class="btn btn-outline-primary" style="float:right;">Primary</button>
-            <br>
-        </form>
-    </div>
+    </form>
+</div>
 </body>
 </html>
