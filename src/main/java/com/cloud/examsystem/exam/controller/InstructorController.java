@@ -1,6 +1,8 @@
 package com.cloud.examsystem.exam.controller;
 
 
+import com.cloud.examsystem.common.dto.DatatableRequest;
+import com.cloud.examsystem.common.util.PaginationUtils;
 import com.cloud.examsystem.exam.entity.Exam;
 import com.cloud.examsystem.exam.model.Option;
 import com.cloud.examsystem.exam.model.Question;
@@ -18,9 +20,11 @@ import java.util.Optional;
 @RequestMapping("/instructor")
 @AllArgsConstructor
 public class InstructorController {
-    private countPage countPage;
+
+    ExamService examService;
+
     @GetMapping
-    public String createInstructorPage(Model model){
+    public String createInstructorPage(Model model) {
 
         return "Instructor/InstructorHome";
     }
@@ -28,19 +32,32 @@ public class InstructorController {
     @GetMapping("exam/create")
     public String createQuestionPage(Model model,@ModelAttribute("counts") countPage counts){
         log.info(counts);
-        this.countPage=counts;
-        model.addAttribute("questionCount",counts.getQuestionCount());
-        model.addAttribute("optionCount",counts.getOptionCount());
+//        this.countPage=counts;
+        Exam exam = new Exam();
+        exam.setQuestionCount(counts.getQuestionCount());
+        exam.setOptionCount(counts.getOptionCount());
+        exam = examService.save(exam);
+        model.addAttribute("data", exam);
+//
+//        model.addAttribute("data",counts.getQuestionCount());
+//        model.addAttribute("optionCount",counts.getOptionCount());
         return "exam/create_exam";
     }
     @GetMapping("exam/createPage")
-    public String createExamPage(Model model){
+    public String createExamPage() {
+
         return "/Instructor/createExamPage";
     }
 
-    @GetMapping("exam/list")
-    public String getExamList() {
-        return "/Instructor/list";
+    @GetMapping("exam/detail/{id}")
+    public String examEdit(@PathVariable("id") Long examId, Model model) {
+        model.addAttribute("data", examService.getExamById(examId).get());
+        return "/Instructor/edit";
+    }
+
+    @PostMapping("exam/list")
+    public Map getExamList(@PathVariable("id") Long instructorId, DatatableRequest request) {
+        return PaginationUtils.createResultSet(examService.getAllForInstructor(request), request);
     }
     @PostMapping("a")
     public String postDeneme(Model model)
