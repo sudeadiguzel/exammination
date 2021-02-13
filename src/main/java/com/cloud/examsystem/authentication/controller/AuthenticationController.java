@@ -27,6 +27,11 @@ public class AuthenticationController {
     private final UserAuthService userAuthService;
 
 
+    @GetMapping
+    public String root(){
+        return "redirect:/login";
+    }
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/session")
     public ResponseEntity<?> getSession(Authentication authentication) {
