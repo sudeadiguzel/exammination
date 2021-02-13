@@ -26,5 +26,7 @@ public class Grade {
 
     private Double score;
 
+    @ManyToOne
+    private Student student;
 }
 
