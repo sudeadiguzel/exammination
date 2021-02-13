@@ -44,5 +44,7 @@ public class Exam {
     private Date endDate;
 
     private Integer applicationCount;
+    private Integer questionCount;
+    private Integer optionCount;
 
 }
