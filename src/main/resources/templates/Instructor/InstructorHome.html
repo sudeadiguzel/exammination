@@ -36,6 +36,18 @@
     </div>
 
   </div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped" id="table">
+      <thead>
+      <tr>
+        <th>Sınav Id</th>
+        <th>Sınav İsmi</th>
+        <th>Başlangıç Tarihi</th>
+        <th>Bitiş Tarihi</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
 
   <style>
     .btn-squared-default
@@ -68,5 +80,34 @@
 
 </div>
 
+<th:block layout:fragment="script">
+  <script src="../static/js/jquery.dataTables.min.js" th:src="@{/js/jquery.dataTables.min.js}"></script>
+  <script src="../static/js/dataTables.bootstrap4.min.js" th:src="@{/js/dataTables.bootstrap4.min.js}"></script>
+  <script src="../static/js/datatableInitializer.js" th:src="@{/js/datatableInitializer.js}"></script>
+  <script>
+    $(document).ready(function () {
+      DatatableUtils.initializer("#table", {
+        ajax: {
+          "url": "/exam/list",
+          "type": "POST"
+        },
+        columnDefs: [{
+          "targets": 0,
+          "data": "id",
+          "render": DatatableUtils.renderRoute('/instructor/exam/detail')
+        }, {
+          "targets": 1,
+          "data": "name",
+        }, {
+          "targets": 2,
+          "data": "name",
+        }, {
+          "targets": 3,
+          "data": "name",
+        }, ]
+      });
+    });
+  </script>
+</th:block>
 </body>
 </html>
