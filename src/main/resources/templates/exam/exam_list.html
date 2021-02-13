@@ -41,27 +41,22 @@
             DatatableUtils.initializer("#table", {
                 ajax: {
                     "url": "/exam/list",
-                    "type": "Post"
+                    "type": "POST"
                 },
-                columnDefs: [
-                    {
-                        "targets": 0,
-                        "data": "id",
-                    },
-                    {
-                        "targets": 1,
-                        "data": "name",
-                    },
-                    {
-                        "targets": 2,
-                        "data": "user.username",
-
-                    },
-                    {
-                        "targets": 3,
-                        "data": "description",
-                    }
-                ]
+                columnDefs: [{
+                    "targets": 0,
+                    "data": "id",
+                    "render": DatatableUtils.renderRoute('/exam')
+                }, {
+                    "targets": 1,
+                    "data": "name",
+                }, {
+                    "targets": 2,
+                    "data": "name",
+                }, {
+                    "targets": 3,
+                    "data": "name",
+                }, ]
             });
         });
     </script>

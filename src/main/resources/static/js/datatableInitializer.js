@@ -56,7 +56,7 @@ var DatatableUtils = {
                 label = '&lt;İsim Belirsiz&gt;';
             }
 
-            return '' + url + '<a href="/">' + getProp(row, idParam, '') + '' + label + '</a>';
+            return  '<a href="'+url+'/'+label+'">' + getProp(row, idParam, '') + '' + '</a>';
         };
     },
     renderBoolean: function (trueContent = 'Evet', falseContent = 'Hayır', dataParam) {
