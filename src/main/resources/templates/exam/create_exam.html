@@ -5,10 +5,9 @@
 <head th:replace="Layout :: html_head"/>
 <body layout:fragment="examContent">
 <div class="container">
-    <form method="POST" th:action="@{/instructor/a}">
-
+    <form method="POST" th:object="${data}" th:action="'/instructor/a/'+${data.id}">
         <div class="card" style="border: 2px solid;" th:name="|question-'${j}'|"
-             th:each="j: ${#numbers.sequence(0, questionCount - 1)}">
+             th:each="j: ${#numbers.sequence(0,data.questionCount - 1)}">
             <div class="card-header">
                 <div class="form-group row">
                     <label th:for="|questionInput-'${j}'|" class="col-sm-2 col-form-label">Question:</label>
@@ -20,7 +19,7 @@
 
             </div>
 
-            <div class="card-body" th:each="i: ${#numbers.sequence(0, optionCount - 1)}" th:name="|optionList-'${j}'|">
+            <div class="card-body" th:each="i: ${#numbers.sequence(0, data.optionCount - 1)}" th:name="|optionList-'${j}'|">
                 <label style="float:right">Check for answer </label>
 
                 <div id='block-11' style='padding: 5px;'>
