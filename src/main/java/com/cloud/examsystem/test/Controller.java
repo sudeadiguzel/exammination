@@ -53,6 +53,10 @@ public class Controller {
         exam.getQuestion().add(question2);
 
         examService.save(exam);
+
+
+
+        exam.getQuestion().get(0);
         return exam;
 
     }
