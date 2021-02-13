@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 
 @AllArgsConstructor
 @Data
-@Entity
 public class countPage {
     Integer questionCount;
     Integer optionCount;
