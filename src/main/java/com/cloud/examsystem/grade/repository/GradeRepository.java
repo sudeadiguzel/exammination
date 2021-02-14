@@ -1,6 +1,5 @@
-package com.cloud.examsystem.exam.repository;
+package com.cloud.examsystem.grade.repository;
 
-import com.cloud.examsystem.exam.entity.Exam;
 import com.cloud.examsystem.grade.entity.Grade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,10 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public interface GradeRepository extends JpaRepository<Grade,Long> {
+
 
     Grade getByDbId(Long id);
 

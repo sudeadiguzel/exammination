@@ -10,8 +10,4 @@ import java.util.List;
 @Data
 public class Student extends User{
 
-    @OneToMany
-    @JoinColumn(name = "db_id")
-    private List<Grade> examApplication;
-
 }

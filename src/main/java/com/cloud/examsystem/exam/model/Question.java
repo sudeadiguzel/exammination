@@ -13,7 +13,40 @@ import java.util.List;
 @AllArgsConstructor
 public class Question implements Serializable {
     private List<Option> optionList = new ArrayList<>();
-    private String description;
+    private String description="";
     private Integer number;
+    private Integer score;
+
+    public Question(int optionCount, int index){
+        for (int i= 0; i<optionCount;i++){
+            this.number=index;
+            this.optionList.add(new Option(i));
+        }
+    }
+
+    public Option getOptionByOptionNumber(int optionIndex){
+        for (Option o:optionList){
+            if (o.getIndex() == optionIndex){
+                return o;
+
+            }
+
+        }
+        return null;
+    }
+
+    public boolean isEquals(Question target){
+        if (this.optionList.size()!= target.getOptionList().size()){
+            return false;
+        }
+        else{
+            for(int i = 0; i < optionList.size(); i++){
+                if (this.getOptionByOptionNumber(i).getCorrect()!=target.getOptionByOptionNumber(i).getCorrect()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 }

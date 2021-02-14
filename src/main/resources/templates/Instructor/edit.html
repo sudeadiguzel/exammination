@@ -5,35 +5,53 @@
 <head th:replace="Layout :: html_head"/>
 <body layout:fragment="examContent">
 <div class="container">
-    <form method="POST" th:object="${data}"
-          th:action="@{'/instructor/a/'+${data.id}}">
-
-        <div class="card" style="border: 2px solid;" th:each="question: ${data.question}">
+    <form method="POST" th:object="${data}" action="/instructor/save/">
+        <div class="card" style="border: 2px solid;" th:name="|question-'${j}'|"
+             th:each="question: ${data.question}">
             <div class="card-header">
                 <div class="form-group row">
-                    <label for="inputQuestionLabel" class="col-sm-2 col-form-label">Question:</label>
+                    <label th:for="|questionInput-'${j}'|" class="col-sm-2 col-form-label">Question:</label>
                     <div class="col-sm-10">
-                        <input class="form-control" id="inputQuestionLabel"
-                               th:value="${question.description}">
+                        <input type="text" th:field="${data.question[__${question.number}__].description}"
+                               th:name="description" class="form-control"
+                               th:id="|questionInput-'${j}'|" required th:placeholder="${question.description}">
                     </div>
                 </div>
+                <input th:field="${data.question[__${question.number}__].number}" th:value="${question.number}" type="hidden"/>
             </div>
 
             <div class="card-body" th:each="option: ${question.optionList}">
+                <label style="float:right">Check for answer </label>
+
                 <div id='block-11' style='padding: 5px;'>
 
-                    <input for='option-"${i}"' id='option-${workplaceService.id}"' th:value="${option.content}"/>
-                    <input type="checkbox" id="{option-correct-${option}}" th:checked="${option.correct}"
-                           style="float:right">
-                    <span id='result-11'></span>
+                    <!--            <input type='radio' name='option' th:value="${i}" id='option-"${i}"' style='transform: scale(1.6); margin-right: 10px; vertical-align: middle;' />-->
+                    <div class="form-group" th:required="true">
+                        <input th:field="${data.question[__${question.number}__].optionList[__${option.index}__].content}"
+                               required th:name="content"
+                               placeholder="Option"/>
+
+                        <input th:field="${data.question[__${question.number}__].optionList[__${option.index}__].index}" th:value="${question.number}" type="hidden"/>
+                        <div class="form-group" th:required="true">
+
+                            <input
+                                    th:field="${data.question[__${question.number}__].optionList[__${option.index}__].correct}"
+                                    type="radio" th:id='|optionAnswer-"${i}"|' th:value='true' style="float:right">
+                        </div>
+                        <span id='result-11'></span>
+                    </div>
                 </div>
+                <br>
+                <hr/>
             </div>
+
         </div>
-        <div class="col-12 form-group text-right">
-            <button class="btn btn-primary" type="submit">
-                Kaydet
-            </button>
-        </div>
+
+        <br>
+        <button type="submit" class="btn btn-outline-primary" style="float:right;">Submit</button>
+        <br>
+
+
     </form>
 </div>
 </body>

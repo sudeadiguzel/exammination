@@ -11,5 +11,9 @@ import java.io.Serializable;
 @Data
 public class Option implements Serializable {
     private String content;
-    private Boolean correct;
+    private Boolean correct = Boolean.FALSE;
+    private int index;
+    public Option(int index){
+        this.index = index;
+    }
 }

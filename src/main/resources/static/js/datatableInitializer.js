@@ -56,7 +56,7 @@ var DatatableUtils = {
                 label = '&lt;İsim Belirsiz&gt;';
             }
 
-            return  '<a href="'+url+'/'+label+'">' + getProp(row, idParam, '') + '' + '</a>';
+            return '<a href="' + url + '/' + label + '">' + getProp(row, idParam, '') + '' + '</a>';
         };
     },
     renderBoolean: function (trueContent = 'Evet', falseContent = 'Hayır', dataParam) {
@@ -70,7 +70,7 @@ var DatatableUtils = {
     },
     mergeStrings: function (strings = [], merger = ' ') {
         return function (data, type, row) {
-            if(Array.isArray(strings)) {
+            if (Array.isArray(strings)) {
                 return strings.map(param => row[param]).join(merger);
             }
 
@@ -86,7 +86,7 @@ var DatatableUtils = {
             return actions.reduce(function (buttons, action) {
                 switch (action) {
                     case 'edit':
-                        buttons += "<a href='/' data-toggle='tooltip' title='Düzenle'><i class='fa fa-pencil text-info'><" + url + "/"+row[idParam]+"i></a> ";
+                        buttons += "<a href='" + url + "/"+row[idParam]+"' data-toggle='tooltip' title='Düzenle'><i class='fa fa-pencil text-info'></i></a> ";
                         break;
 
                     case 'remove':
@@ -109,30 +109,68 @@ var DatatableUtils = {
             }, "");
         };
     },
-    renderStatus: function() {
+
+    renderAction: function () {
+        return function (url, actions=[], id) {
+            if (!Array.isArray(actions)) {
+                return "data";
+            }
+            console.log(actions)
+
+            return actions.reduce(function (buttons, action) {
+                switch (action) {
+                    case 'edit':
+                        buttons +='<a href="' + url + '/detail/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Edit\'><i class=\'fa fa-pencil text-info\'></a>'
+                        break;
+                    case 'grades':
+                        const button = '<a href="' + url + '/resultDetail/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></a>'
+                        buttons +=button
+                        console.log("------------------")
+                        console.log(buttons)
+                        console.log("------------------")
+                        break;
+                }
+                console.log("*********************************")
+                console.log(buttons)
+                console.log("*********************************")
+                return buttons;
+            }, "");
+        };
+    },
+    renderStatus: function () {
         return function (data) {
-            if(data === 'PASSIVE') {
-                return '<span class="badge badge-warning badge-pill">Pasif</span>';
+            if (data === 'PASSIVE') {
+                return '<span class="badge badge-warning badge-pill">Passive</span>';
             }
 
-            if(data === 'DELETED') {
-                return '<span class="badge badge-danger badge-pill">Silinmiş</span>';
+            if (data === 'PENDING') {
+                return '<span class="badge badge-danger badge-pill">Pending</span>';
             }
 
-            return '<span class="badge badge-success badge-pill">Aktif</span>';
+            if (data === 'ENDED') {
+                return '<span class="badge badge-success badge-pill">Pending</span>';
+            }
+            return '<span class="badge badge-primary badge-pill">Active</span>';
         }
     },
-    renderVerificationStatus: function() {
+    renderVerificationStatus: function () {
         return function (data) {
 
-            return data.verified===true ? 'Onaylandı' : (data.waitingVerify ===true  ? 'Onay Bekliyor' : 'Taslak');
+            return data.verified === true ? 'Onaylandı' : (data.waitingVerify === true ? 'Onay Bekliyor' : 'Taslak');
         }
     },
-    renderProperty: function(propertyName = null) {
+    renderProperty: function (propertyName = null) {
         return function (data, type, row) {
             return propertyName !== undefined && row[propertyName] !== undefined ? row[propertyName] : data;
         }
     },
+
+    renderDateTime: function () {
+        return function (data) {
+            return moment(data).format('MM/DD/YYYY hh:mm');
+        }
+    },
+
     renderLink: function (urlParam, labelParam) {
         return function (data, type, row) {
             return '<a href="' + (urlParam === undefined ? data : row[urlParam]) + '">' + (labelParam == undefined ? data : row[labelParam]) + '</a>';

@@ -6,13 +6,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body layout:fragment="studentResultContent">
+<body layout:fragment="studentExamListContent">
 <div class="table-responsive">
     <table class="table table-bordered table-striped" id="table">
         <thead>
         <tr>
             <!--            <th>Exam Id</th>-->
-            <th>Exam Id</th>
+            <th>Student Id</th>
+            <th>Student Name</th>
             <th>Result</th>
         </tr>
         </thead>
@@ -24,23 +25,29 @@
         <script src="../static/js/datatableInitializer.js" th:src="@{/js/datatableInitializer.js}"></script>
         <script>
 
-    $(document).ready(function () {
-      DatatableUtils.initializer("#table", {
-        ajax: {
-          "url": "/student/result",
-          "type": "POST"
-        },
-        columnDefs: [{
-          "targets": 0,
-          "data": "student.name",
+            var id = [[${examId}]];
 
-        }, {
-          "targets": 1,
-          "data": "score",
-        }]
-      });
-    });
-  </script>
+            $(document).ready(function () {
+                DatatableUtils.initializer("#table", {
+                    ajax: {
+                        "url": "/instructor/exam/results/"+id,
+                        "type": "POST"
+                    },
+                    columnDefs: [{
+                        "targets": 0,
+                        "data": "student.db_id",
+
+                    },{
+                        "targets": 1,
+                        "data": "student.name",
+
+                    }, {
+                        "targets": 2,
+                        "data": "score",
+                    }]
+                });
+            });
+        </script>
     </th:block>
 </div>
 </body>

@@ -86,6 +86,23 @@ public class AuthenticationController {
         return "redirect:/exam/home";
     }
 
+    @GetMapping("/all")
+    public String getAllPage(Model model){
+        int a=1;
+        if(userAuthService.getCurrentUser().isInstructor()){
+            return "redirect:/instructor";
+        }
+        return "redirect:/exam/home";
+    }
+    @GetMapping("/actives")
+    public String getActivesPage(Model model){
+        int a=1;
+//        if(userAuthService.getCurrentUser().isInstructor()){
+//            return "redirect:/instructor/exam/actives";
+//        }
+        return "redirect:/exam/home";
+    }
+
 //    @GetMapping()
 //    public String Index(){
 //        return "redirect: /login";

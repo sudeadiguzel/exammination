@@ -1,41 +1,57 @@
-<!doctype html>
-<html lang="tr"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Sınavı Çöz</title>
-</head>
-<body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="sharedTemplates/Layout">
+<head th:replace="Layout :: html_head"/>
+<body layout:fragment="examContent">
 <div class="container">
-    <form method="POST" id="editor-form" th:object="${data}" action="/admin/event/customSave">
-        <div class="card" style="border: 2px solid;" th:each="question: ${data.question}">
+    <form method="POST" th:object="${data}" th:action="@{/exam/{id}(id=${data.id})}">
+        <input th:field="${data.id}" th:value="${data.id}" type="hidden"/>
+        <div class="card" style="border: 2px solid;" th:name="|question-'${j}'|"
+             th:each="question: ${data.question}">
             <div class="card-header">
-
                 <div class="form-group row">
-                    <label for="inputQuestionLabel" class="col-sm-2 col-form-label">Question:</label>
+                    <label th:for="|questionInput-'${j}'|" class="col-sm-2 col-form-label">Question:</label>
                     <div class="col-sm-10">
-                        <label type="text" class="form-control" id="inputQuestionLabel"
-                               th:text="${question.number + '-' +question.description}"></label>
+                        <label type="text" th:text="${data.question[__${question.number}__].description}"
+                               th:name="description" class="form-control"
+                               th:id="|questionInput-'${j}'|"></label>
                     </div>
                 </div>
+                <input th:field="${data.question[__${question.number}__].number}" th:value="${question.number}" type="hidden"/>
             </div>
 
             <div class="card-body" th:each="option: ${question.optionList}">
+                <label style="float:right">Check for answer </label>
+
                 <div id='block-11' style='padding: 5px;'>
-                    <input type='radio' name='option' th:text="${option.content}" id='option-"${i}"'
-                           style='transform: scale(1.6); margin-right: 10px; vertical-align: middle;'/>
-                    <label for='option-"${i}"' id='option-${workplaceService.id}"' th:value="${option.content}"/>
-                    <span id='result-11'></span>
+
+                    <!--            <input type='radio' name='option' th:value="${i}" id='option-"${i}"' style='transform: scale(1.6); margin-right: 10px; vertical-align: middle;' />-->
+                    <div class="form-group" th:required="true">
+                        <label th:text="${data.question[__${question.number}__].optionList[__${option.index}__].content}"></label>
+
+                        <input th:field="${data.question[__${question.number}__].optionList[__${option.index}__].index}" th:value="${question.number}" type="hidden"/>
+                        <div class="form-group" th:required="true">
+
+                            <input
+                                    th:field="${data.question[__${question.number}__].optionList[__${option.index}__].correct}"
+                                    type="radio" th:id='|optionAnswer-"${i}"|' th:value='true' style="float:right">
+                        </div>
+                        <span id='result-11'></span>
+                    </div>
                 </div>
+                <br>
+                <hr/>
             </div>
+
         </div>
-        <div class="col-12 form-group text-right">
-            <button class="btn btn-primary" type="submit">
-                Kaydet
-            </button>
-        </div>
+
+        <br>
+        <button type="submit" class="btn btn-outline-primary" style="float:right;">Submit</button>
+        <br>
+
+
     </form>
 </div>
-
 </body>
 </html>

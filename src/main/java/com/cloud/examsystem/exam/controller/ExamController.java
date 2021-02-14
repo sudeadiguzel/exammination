@@ -5,8 +5,9 @@ import com.cloud.examsystem.common.dto.DatatableRequest;
 import com.cloud.examsystem.common.util.PaginationUtils;
 import com.cloud.examsystem.exam.entity.Exam;
 import com.cloud.examsystem.exam.service.ExamService;
-import com.cloud.examsystem.exam.service.GradeService;
+import com.cloud.examsystem.grade.service.GradeService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/exam")
 @AllArgsConstructor
+@Log4j2
 public class ExamController {
     private final ExamService examService;
     GradeService gradeService;
@@ -31,6 +33,12 @@ public class ExamController {
         return "/exam/apply";
     }
 
+    @PostMapping("/{id}")
+    public void applyExam(@ModelAttribute Exam model){
+        log.info(model);
+        examService.solve(model);
+    }
+
     @GetMapping("/list")
     public String getExamListPage(Model model) {
         return "/exam/exam_list";
@@ -39,7 +47,7 @@ public class ExamController {
     @PostMapping("/list")
     @ResponseBody
     public Map getListWithPagination(@ModelAttribute DatatableRequest request) {
-        return PaginationUtils.createResultSet(examService.getAll(request), request);
+        return PaginationUtils.createResultSet(examService.getActivesForInstructor(request), request);
     }
 
 
@@ -59,7 +67,7 @@ public class ExamController {
 
     @PostMapping("/exam/list")
     public Map getExamList(DatatableRequest request) {
-        return PaginationUtils.createResultSet(examService.getAll(request), request);
+        return PaginationUtils.createResultSet(examService.getAllActiveRecords(request), request);
     }
 
 // student results
