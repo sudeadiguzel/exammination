@@ -10,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -41,17 +42,14 @@ public class Exam {
     @ManyToOne
     private User user;
 
-    private String description="";
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Date startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Date endDate;
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Date creationTimestamp;
-
-    private Integer applicationCount;
-
 
     @Enumerated(EnumType.STRING)
     private StatusType status = StatusType.PASSIVE;

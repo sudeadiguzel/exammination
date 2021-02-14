@@ -15,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -53,9 +56,16 @@ public class InstructorController {
 
     @GetMapping("exam/create")
     public String createQuestionPage(Model model,@ModelAttribute("counts") countPage counts){
-        log.info(counts);
-
         Exam exam = new Exam(counts.getQuestionCount(),counts.getOptionCount());
+        log.info(counts);
+        try {
+            Date dateStart=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(counts.getStartDate());
+            exam.setStartDate(dateStart);
+            Date dateEnd=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(counts.getEndDate());
+            exam.setEndDate(dateEnd);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         model.addAttribute("data", exam);
 //
         log.info(exam);

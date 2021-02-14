@@ -7,17 +7,48 @@
     <title>Title</title>
 </head>
 <body layout:fragment="createExamContent">
-    <form method="GET" id="create-form" th:object="${counts}" th:action="@{/instructor/exam/create}" novalidate>
-        <div class="form-group">
-            <label th:for="|questionCount|">Question Count</label>
-            <input type="number" class="form-control" th:id="|questionCount|" th:name="|questionCount|" >
-        </div>
-        <div class="form-group">
-            <label th:for="|optionCount|">Option Count</label>
-            <input type="number" class="form-control" th:id="|optionCount|" th:name="|optionCount|"  >
-        </div>
-        <button type="submit" class="btn btn-squared-default btn-primary">Submit </button>
-    </form>
 
+<form method="GET" id="create-form" th:object="${counts}" th:action="@{/instructor/exam/create}" novalidate>
+    <div class="form-group row">
+        <label for="start" class="col-2 col-form-label">Exam Start Time</label>
+        <div class="col-10">
+            <input class="form-control" type="datetime-local" id="start" th:name="startDate">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="end" class="col-2 col-form-label">Exam Finish Time</label>
+        <div class="col-10">
+            <input class="form-control" type="datetime-local" id="end" th:name="endDate" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label th:for="|questionCount|">Question Count</label>
+        <input type="number" class="form-control" th:id="|questionCount|" th:name="|questionCount|" required>
+    </div>
+    <div class="form-group">
+        <label th:for="|optionCount|">Option Count</label>
+        <input type="number" class="form-control" th:id="|optionCount|" th:name="|optionCount|">
+    </div>
+    <button type="submit" class="btn btn-squared-default btn-primary"  >Submit</button>
+</form>
+<th:block layout:fragment="script">
+<script>
+let today = new Date().toISOString().slice(0, 19)
+
+var start = document.getElementById('start');
+var end = document.getElementById('end');
+start.min=today;
+start.addEventListener('change', function() {
+
+    if (start.value)
+        end.min = start.value;
+}, false);
+end.addEventListener('change', function() {
+    if (end.value)
+        start.max = end.value;
+}, false);
+
+</script>
+</th:block>
 </body>
 </html>
