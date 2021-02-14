@@ -7,6 +7,7 @@ import com.cloud.examsystem.exam.entity.Exam;
 import com.cloud.examsystem.exam.model.Question;
 import com.cloud.examsystem.exam.model.countPage;
 import com.cloud.examsystem.exam.service.ExamService;
+import com.cloud.examsystem.exam.service.GradeService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ import java.util.Optional;
 public class InstructorController {
 
     ExamService examService;
-
+    GradeService gradeService;
     @GetMapping
     public String createInstructorPage(Model model) {
 
@@ -61,6 +62,19 @@ public class InstructorController {
     public Map getExamList(@PathVariable("id") Long instructorId, DatatableRequest request) {
         return PaginationUtils.createResultSet(examService.getAllForInstructor(request), request);
     }
+
+    @GetMapping("exam/resultDetail/{id}")
+    public String examResult(@PathVariable("id") Long examId,Model model){
+        model.addAttribute("examId",examId);
+        return "/Instructor/ResultsPage";
+    }
+
+    @PostMapping("/exam/results/{id:\\d+}")
+    @ResponseBody
+    public Map getGradeList(@PathVariable("id") Long examId, DatatableRequest request){
+      return PaginationUtils.createResultSet(gradeService.getAllbyExamId(request,examId),request);
+    }
+
     @PostMapping("a")
     public String postDeneme(Model model)
     {

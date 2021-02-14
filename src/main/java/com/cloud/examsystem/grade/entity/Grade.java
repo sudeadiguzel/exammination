@@ -2,6 +2,7 @@ package com.cloud.examsystem.grade.entity;
 
 import com.cloud.examsystem.exam.entity.Exam;
 import com.cloud.examsystem.user.entity.Student;
+import com.cloud.examsystem.user.entity.User;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
@@ -27,6 +28,6 @@ public class Grade {
     private Double score;
 
     @ManyToOne
-    private Student student;
+    private User student;
 }
 

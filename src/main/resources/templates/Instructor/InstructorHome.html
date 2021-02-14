@@ -36,6 +36,8 @@
     </div>
 
   </div>
+
+
   <div class="table-responsive">
     <table class="table table-bordered table-striped" id="table">
       <thead>
@@ -44,6 +46,7 @@
         <th>Sınav İsmi</th>
         <th>Başlangıç Tarihi</th>
         <th>Bitiş Tarihi</th>
+        <th>Grades</th>
       </tr>
       </thead>
     </table>
@@ -95,7 +98,7 @@
           "targets": 0,
           "data": "id",
           "render": DatatableUtils.renderRoute('/instructor/exam/detail')
-        }, {
+        }, { //
           "targets": 1,
           "data": "name",
         }, {
@@ -104,7 +107,13 @@
         }, {
           "targets": 3,
           "data": "name",
-        }, ]
+        },  {
+          "targets": 4,
+          "data": "id",
+          "render": DatatableUtils.renderRoute('/instructor/exam/resultDetail')
+        }
+
+        ]
       });
     });
   </script>

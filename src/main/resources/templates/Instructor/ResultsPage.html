@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="sharedTemplates/Layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body layout:fragment="studentResultContent">
+<div class="table-responsive">
+    <table class="table table-bordered table-striped" id="table">
+        <thead>
+        <tr>
+            <!--            <th>Exam Id</th>-->
+            <th>Exam Id</th>
+            <th>Result</th>
+        </tr>
+        </thead>
+    </table>
+
+    <th:block layout:fragment="script">
+        <script src="../static/js/jquery.dataTables.min.js" th:src="@{/js/jquery.dataTables.min.js}"></script>
+        <script src="../static/js/dataTables.bootstrap4.min.js" th:src="@{/js/dataTables.bootstrap4.min.js}"></script>
+        <script src="../static/js/datatableInitializer.js" th:src="@{/js/datatableInitializer.js}"></script>
+        <script>
+
+    $(document).ready(function () {
+      DatatableUtils.initializer("#table", {
+        ajax: {
+          "url": "/student/result",
+          "type": "POST"
+        },
+        columnDefs: [{
+          "targets": 0,
+          "data": "student.name",
+
+        }, {
+          "targets": 1,
+          "data": "score",
+        }]
+      });
+    });
+  </script>
+    </th:block>
+</div>
+</body>
+</html>

@@ -79,10 +79,11 @@ public class AuthenticationController {
 
     @GetMapping("/homepage")
     public String getHomePage(Model model){
+        int a=1;
         if(userAuthService.getCurrentUser().isInstructor()){
             return "redirect:/instructor";
         }
-        return "homepage";
+        return "redirect:/exam/home";
     }
 
 //    @GetMapping()

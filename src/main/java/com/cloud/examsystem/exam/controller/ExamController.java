@@ -5,6 +5,7 @@ import com.cloud.examsystem.common.dto.DatatableRequest;
 import com.cloud.examsystem.common.util.PaginationUtils;
 import com.cloud.examsystem.exam.entity.Exam;
 import com.cloud.examsystem.exam.service.ExamService;
+import com.cloud.examsystem.exam.service.GradeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ExamController {
     private final ExamService examService;
+    GradeService gradeService;
 
     @GetMapping("/{id}") //exam getter
     public String getExamById(@PathVariable("id") Long id, Model model) {
@@ -45,9 +47,33 @@ public class ExamController {
     public String createQuestionPage(Model model){
         model.addAttribute("question_number",3);
         model.addAttribute("option_number",4);
-        return "exam/create_exam";
+        return "/exam/create_exam";
     }
 
+
+    @GetMapping("/home")
+    public String startExam(Model model) {
+
+        return "/exam/examPage";
+    }
+
+    @PostMapping("/exam/list")
+    public Map getExamList(DatatableRequest request) {
+        return PaginationUtils.createResultSet(examService.getAll(request), request);
+    }
+
+// student results
+//    @GetMapping("exam/detail/{id}")
+//    public String getResultList(@PathVariable("id") Long studentId, Model model) {
+//        model.addAttribute("result", studentId);
+//        return "/student/result/list";
+//    }
+//
+//    @PostMapping("/student/result")
+//
+//    public Map postResultList(DatatableRequest request) {
+//        return PaginationUtils.createResultSet(gradeService.getAllResultsbyStudentId(request), request);
+//    }
 
 
 }

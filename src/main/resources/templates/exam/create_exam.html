@@ -25,11 +25,13 @@
                 <div id='block-11' style='padding: 5px;'>
 
                     <!--            <input type='radio' name='option' th:value="${i}" id='option-"${i}"' style='transform: scale(1.6); margin-right: 10px; vertical-align: middle;' />-->
+
                     <input th:for='|option-"${i}"|' th:name='|option-"${i}"|' th:id='|option-"${i}"|'
                            placeholder="Option"></input>
                     <input type="checkbox" id="flexCheckDefault" th:name='|optionAnswerCheck-"${i}"|' style="float:right">
                     <span id='result-11'></span>
                 </div>
+
                 <br>
                 <hr/>
             </div>
