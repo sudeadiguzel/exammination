@@ -32,10 +32,11 @@ public class UserAuthService implements UserDetailsService {
     public User getCurrentUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object pricipal = auth.getPrincipal();
-        String user="";
-        if (pricipal instanceof User) {
-            user = ((User) pricipal).getName();
+        try{
+            User user =  ((UserPrincipal)pricipal).getUser();
+            return user;
+        }catch (Exception e){
+            return new User();
         }
-        return new User();
     }
 }
