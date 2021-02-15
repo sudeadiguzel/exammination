@@ -9,6 +9,7 @@
         <input th:field="${data.id}" th:value="${data.id}" type="hidden"/>
         <input th:field="${data.startDate}" th:value="${data.startDate}" type="hidden"/>
         <input th:field="${data.endDate}" th:value="${data.endDate}" type="hidden"/>
+        <input th:field="${data.creationTimestamp}" th:value="${data.creationTimestamp}" type="hidden"/>
         <div class="card" style="border: 2px solid;" th:name="|question-'${j}'|"
              th:each="question: ${data.question}">
             <div class="card-header">
