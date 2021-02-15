@@ -91,14 +91,10 @@
                 },{
                     "targets": 5,
                     "data": "id",
-                     "render": function (data) {
-                        console.log("/*/*/*/*/*/*/*/*/*//*/*/*//*/*/*/")
-                         console.log(data)
-                        console.log("/*/*/*/*/*/*/*/*/*//*/*/*//*/*/*/")
-                         var buttons=[];
-                         buttons.push('<a href="/instructor/exam/detail/' + data + '" data-toggle=\'tooltip\' title=\'Edit\'><i class=\'fa fa-pencil text-info\'></i></a>');
-                         buttons.push('<input name="/instructor/exam/detail/' + data + '" data-toggle=\'tooltip\' title=\'Edit\'></input>')
-                        buttons.push('<a href="/instructor/exam/resultDetail/' + data + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></i></a>');
+                    "render": function (data) {
+                        var buttons="";
+                        buttons+=('<a href="/instructor/exam/detail/' + data + '" data-toggle=\'tooltip\' title=\'Edit\'><i class=\'fa fa-pencil text-info mr-3 ml-2\'></i></a>');
+                        buttons+=('<a href="/instructor/exam/resultDetail/' + data + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></i></a>');
                         return buttons;
                     }}, ]
             });
