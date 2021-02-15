@@ -15,6 +15,7 @@
             <th>Student Id</th>
             <th>Student Name</th>
             <th>Result</th>
+            <th>Actions</th>
         </tr>
         </thead>
     </table>
@@ -30,20 +31,29 @@
             $(document).ready(function () {
                 DatatableUtils.initializer("#table", {
                     ajax: {
-                        "url": "/instructor/exam/results/"+id,
+                        "url": "/instructor/exam/results/" + id,
                         "type": "POST"
                     },
                     columnDefs: [{
                         "targets": 0,
                         "data": "student.db_id",
 
-                    },{
+                    }, {
                         "targets": 1,
                         "data": "student.name",
 
                     }, {
                         "targets": 2,
                         "data": "score",
+                    }, {
+                        "targets": 3,
+                        "data": "id",
+                        "render": function () {
+                            var stdid = [[${student.db_id}]];
+                            var buttons=[];
+                            buttons.push('<a href="/grade/' + stdid + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></i></a>');
+                            return buttons;
+                        }
                     }]
                 });
             });

@@ -77,6 +77,61 @@ var DatatableUtils = {
             return data;
         };
     },
+
+    renderStudentActions: function (idParam, gradeList = []) {
+        // console.log("---------------------")
+        // console.log(gradeList)
+        // console.log("---------------------")
+        return function (data, type, row) {
+            console.log("------------------");
+            console.log(gradeList.map((i) => {
+                if (i == idParam) {
+                    return true
+                }
+                ;
+            }) != null);
+            console.log("------------------");
+            if (row["status"] === 'ACTIVE') {
+                if (gradeList.map((i) => {
+                    if (i == idParam) {
+                        return true
+                    }
+                    ;
+                }) != null) {
+                    return ('<a' + row[idParam] + '" data-toggle=\'tooltip\' aria-hidden=\'true\' title=\'Show Result\'><i class="fas fa-poll"></i></i></a>');
+
+                } else {
+
+                    return ('<a href="/exam/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Apply\'><i class=\'fa fa-pencil text-info\'></i></a>');
+                }
+            } else {
+                if (row["status"] === 'ENDED') {
+                    return ('<a href="/grade/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Show Result\'><i class="fas fa-poll"></i></i></a>');
+
+                }
+            }
+            var buttons = [];
+            return buttons;
+        }
+    }, renderTeacherActions: function (idParam, gradeList = []) {
+        // console.log("---------------------")
+        // console.log(gradeList)
+        // console.log("---------------------")
+        return function (data, type, row) {
+            var buttons = [];
+
+
+            if (row["status"] = 'ENDED') {
+                buttons.push('<a href="/exam/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Apply\'><i class=\'fa fa-pencil text-info\'></i></a>');
+            } else {
+
+                buttons.push('<a href="/grade/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Show Result\'><i class="fas fa-poll"></i></i></a>');
+
+            }
+            return buttons;
+
+        }
+    },
     renderActions: function (url = '', actions = ['edit', 'remove'], idParam = 'id') {
         return function (data, type, row) {
             if (!Array.isArray(actions)) {
@@ -86,7 +141,7 @@ var DatatableUtils = {
             return actions.reduce(function (buttons, action) {
                 switch (action) {
                     case 'edit':
-                        buttons += "<a href='" + url + "/"+row[idParam]+"' data-toggle='tooltip' title='Düzenle'><i class='fa fa-pencil text-info'></i></a> ";
+                        buttons += "<a href='" + url + "/" + row[idParam] + "' data-toggle='tooltip' title='Düzenle'><i class='fa fa-pencil text-info'></i></a> ";
                         break;
 
                     case 'remove':
@@ -111,7 +166,7 @@ var DatatableUtils = {
     },
 
     renderAction: function () {
-        return function (url, actions=[], id) {
+        return function (url, actions = [], id) {
             if (!Array.isArray(actions)) {
                 return "data";
             }
@@ -120,11 +175,11 @@ var DatatableUtils = {
             return actions.reduce(function (buttons, action) {
                 switch (action) {
                     case 'edit':
-                        buttons +='<a href="' + url + '/detail/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Edit\'><i class=\'fa fa-pencil text-info\'></a>'
+                        buttons += '<a href="' + url + '/detail/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Edit\'><i class=\'fa fa-pencil text-info\'></a>'
                         break;
                     case 'grades':
                         const button = '<a href="' + url + '/resultDetail/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></a>'
-                        buttons +=button
+                        buttons += button
                         console.log("------------------")
                         console.log(buttons)
                         console.log("------------------")
@@ -148,7 +203,7 @@ var DatatableUtils = {
             }
 
             if (data === 'ENDED') {
-                return '<span class="badge badge-success badge-pill">Pending</span>';
+                return '<span class="badge badge-success badge-pill">RATED</span>';
             }
             return '<span class="badge badge-primary badge-pill">Active</span>';
         }
@@ -167,7 +222,7 @@ var DatatableUtils = {
 
     renderDateTime: function () {
         return function (data) {
-            return moment(data).format('MM/DD/YYYY hh:mm');
+            return moment(data).format('MM/DD/YYYY HH:mm');
         }
     },
 

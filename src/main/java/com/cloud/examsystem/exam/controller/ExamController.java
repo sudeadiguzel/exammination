@@ -6,6 +6,7 @@ import com.cloud.examsystem.common.util.PaginationUtils;
 import com.cloud.examsystem.exam.entity.Exam;
 import com.cloud.examsystem.exam.service.ExamService;
 import com.cloud.examsystem.grade.service.GradeService;
+import com.cloud.examsystem.user.service.UserAuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class ExamController {
     private final ExamService examService;
     GradeService gradeService;
+    private final UserAuthService authService;
 
     @GetMapping("/{id}") //exam getter
     public String getExamById(@PathVariable("id") Long id, Model model) {
@@ -33,41 +35,64 @@ public class ExamController {
         return "/exam/apply";
     }
 
-    @PostMapping("/{id}")
-    public void applyExam(@ModelAttribute Exam model){
-        log.info(model);
+    @PostMapping("/")
+    public String applyExam(@ModelAttribute Exam model) {
         examService.solve(model);
+        return "redirect:/homepage";
     }
 
     @GetMapping("/list")
     public String getExamListPage(Model model) {
+
         return "/exam/exam_list";
+    }
+
+    @GetMapping("/list/pending")
+    public String getPendingExamListPage() {
+        return "/exam/pending_list";
+    }
+
+    @PostMapping("/list/pending")
+    @ResponseBody
+    public Map getPendingExamList(DatatableRequest request) {
+        return PaginationUtils.createResultSet(examService.getAllPendingRecordsWithPagination(request), request);
+    }
+
+    @GetMapping("/list/completed")
+    public String getCompletedExamListPage() {
+        return "/exam/completed_list";
+    }
+
+    @PostMapping("/list/completed")
+    @ResponseBody
+    public Map getCompletedExamList(DatatableRequest request) {
+        return PaginationUtils.createResultSet(examService.getAllCompletedRecordsWithPagination(request), request);
     }
 
     @PostMapping("/list")
     @ResponseBody
     public Map getListWithPagination(@ModelAttribute DatatableRequest request) {
-        return PaginationUtils.createResultSet(examService.getActivesForInstructor(request), request);
+        return PaginationUtils.createResultSet(examService.getAllRecordsOfStudent(request), request);
     }
 
 
     @GetMapping("/create")
-    public String createQuestionPage(Model model){
-        model.addAttribute("question_number",3);
-        model.addAttribute("option_number",4);
+    public String createQuestionPage(Model model) {
+        model.addAttribute("question_number", 3);
+        model.addAttribute("option_number", 4);
         return "/exam/create_exam";
     }
 
 
     @GetMapping("/home")
     public String startExam(Model model) {
-
-        return "/exam/examPage";
+        model.addAttribute("appliedExams", gradeService.getAllbyStudentId(authService.getCurrentUser().getDb_id()));
+        return "/exam/home";
     }
 
     @PostMapping("/exam/list")
     public Map getExamList(DatatableRequest request) {
-        return PaginationUtils.createResultSet(examService.getAllActiveRecords(request), request);
+        return PaginationUtils.createResultSet(examService.getAllRecordsOfStudent(request), request);
     }
 
 // student results

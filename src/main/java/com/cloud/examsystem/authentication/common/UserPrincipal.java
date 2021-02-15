@@ -51,4 +51,6 @@ public class UserPrincipal implements UserDetails {
     public User getUser(){
      return this.user;
     }
+
+    public boolean isInstructor(){return this.user.isInstructor();}
 }

@@ -5,7 +5,7 @@
 <head th:replace="Layout :: html_head"/>
 <body layout:fragment="examContent">
 <div class="container">
-    <form method="POST" th:object="${data}" th:action="@{/exam/{id}(id=${data.id})}">
+    <form method="POST" th:object="${data}" th:action="@{/exam/}">
         <input th:field="${data.id}" th:value="${data.id}" type="hidden"/>
         <div class="card" style="border: 2px solid;" th:name="|question-'${j}'|"
              th:each="question: ${data.question}">

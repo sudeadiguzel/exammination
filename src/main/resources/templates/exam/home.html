@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="sharedTemplates/Layout">
+<head>
+    <meta charset="utf-8" />
+    <title>Square Buttons Effects Template | PrepBootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body layout:fragment="studentExamListContent">
+
+<div class="container">
+    <!-- Square Buttons Effects - START -->
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Student Controller Panel</h2>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" id="table">
+            <thead>
+            <tr>
+                <th>Sınav Id</th>
+                <th>Sınav İsmi</th>
+                <th>Başlangıç Tarihi</th>
+                <th>Bitiş Tarihi</th>
+                <th>Start</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <style>
+    .btn-squared-default
+    {
+        width: 100px !important;
+        height: 100px !important;
+        font-size: 10px;
+    }
+
+        .btn-squared-default:hover
+        {
+            border: 3px solid white;
+            font-weight: 800;
+        }
+
+    .btn-squared-default-plain
+    {
+        width: 100px !important;
+        height: 100px !important;
+        font-size: 10px;
+    }
+
+        .btn-squared-default-plain:hover
+        {
+            border: 0px solid white;
+        }
+</style>
+
+    <!-- Square Buttons Effects - END -->
+
+</div>
+
+<th:block layout:fragment="script">
+    <script src="../static/js/jquery.dataTables.min.js" th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script src="../static/js/dataTables.bootstrap4.min.js" th:src="@{/js/dataTables.bootstrap4.min.js}"></script>
+    <script src="../static/js/datatableInitializer.js" th:src="@{/js/datatableInitializer.js}"></script>
+    <script>
+        var gradeList = [[${appliedExams}]];
+    $(document).ready(function () {
+      DatatableUtils.initializer("#table", {
+        ajax: {
+          "url": "/exam/list",
+          "type": "POST"
+        },
+        columnDefs: [{
+          "targets": 0,
+          "data": "id",
+        }, {
+          "targets": 1,
+          "data": "name",
+        }, {
+          "targets": 2,
+          "data": "name",
+        }, {
+          "targets": 3,
+          "data": "status",
+            "render":DatatableUtils.renderStatus('status')
+        },  {
+          "targets": 4,
+          "data": "id",
+          "render": DatatableUtils.renderStudentActions("id",gradeList
+      )
+        }
+
+        ]
+      });
+    });
+  </script>
+</th:block>
+</body>
+</html>

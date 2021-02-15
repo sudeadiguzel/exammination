@@ -21,9 +21,9 @@ public class ExamDeadlineListener {
 
     private void endExam() {
         log.info("EXAMS ENDING JOB ACTIVED");
-        List<Exam> examList = examService.getAllActiveRecords();
+        List<Exam> examList = examService.getAllRecordsOfStudent();
         for (Exam exam : examList) {
-            if (exam.getEndDate().before(new Date())) {
+            if (exam.getEndDate().getTime()<new Date().getTime()) {
                 log.info("EXAM: " + exam.getId() + ", ENDED AT: " + new Date());
                 exam.setStatus(StatusType.ENDED);
                 examService.updateExam(exam);

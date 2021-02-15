@@ -51,6 +51,9 @@ public class Exam {
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Date creationTimestamp;
 
+    private Integer applicationCount;
+
+
     @Enumerated(EnumType.STRING)
     private StatusType status = StatusType.PASSIVE;
 

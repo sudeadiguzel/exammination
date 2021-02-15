@@ -10,7 +10,6 @@ import com.cloud.examsystem.grade.service.GradeService;
 import com.cloud.examsystem.user.service.UserAuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -85,16 +84,17 @@ public class InstructorController {
         return "Instructor/edit";
     }
 
-    @GetMapping("exam/resultDetail/{id}")
-    public String examResult(@PathVariable("id") Long examId,Model model){
+    @GetMapping("exam/resultDetail/{id:\\d+}")
+    @ResponseBody
+    public String examResultPage(@PathVariable("id") Long examId,Model model){
         model.addAttribute("examId",examId);
-        return "/Instructor/ResultsPage";
+        return "./Instructor/ResultsPage";
     }
 
     @PostMapping("/exam/results/{id:\\d+}")
     @ResponseBody
     public Map getGradeList(@PathVariable("id") Long examId, DatatableRequest request){
-      return PaginationUtils.createResultSet(gradeService.getAllbyExamId(request,examId),request);
+      return PaginationUtils.createResultSet(gradeService.getAllbyExamIdAsPage(request,examId),request);
     }
 
 
@@ -103,21 +103,6 @@ public class InstructorController {
     {
         examService.save(model);
         log.info(model);
-//        Exam exam=new Exam();
-//        for(int i=0;i<this.countPage.getQuestionCount();i++){
-//            Question question=new Question();
-//            for(int j=0;j<this.countPage.getOptionCount();j++){
-//                String optionLabel= (String) model.getAttribute("option-".concat(String.valueOf(j)));
-//                Boolean optionAnswerCheck= (Boolean) model.getAttribute("optionAnswerCheck-".concat(String.valueOf(j)));
-//                Option option=new Option();
-//                option.setContent(optionLabel);
-//                option.setCorrect(optionAnswerCheck);
-//                question.getOptionList().add(option);
-//            }
-//            exam.getQuestion().add(question);
-//        }
-
-//        log.info(exam);
         return "redirect:/instructor/";
     }
 

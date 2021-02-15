@@ -15,11 +15,12 @@ import java.util.Optional;
 public interface ExamRepository extends JpaRepository<Exam,Long> {
     Optional<Exam> getById(Long id);
 
-    @Query("FROM Exam e")
+    @Query("FROM Exam e where e.status<>'PASSIVE'")
     Page<Exam> findRecords(Pageable p);
 
-    @Query("FROM Exam e where e.user.db_id=:id and e.status=:status")
-    Page<Exam> findActiveRecordsForInstructorByStatus(Long id, StatusType status,Pageable p);
+    @Query("FROM Exam e where e.status='ACTIVE'")
+    Page<Exam> findActiveRecordsForStudentWithPaging(Pageable p);
+
     @Query("FROM Exam e where e.user.db_id=:id")
     Page<Exam> findAllRecordsForInstructor(Long id,Pageable p);
 
@@ -27,4 +28,9 @@ public interface ExamRepository extends JpaRepository<Exam,Long> {
     List<Exam> findAllActiveRecords();
     @Query("from  Exam e where e.status='PENDING'")
     List<Exam> findAllPendingRecords();
+    @Query("from  Exam e where e.status='PENDING'")
+    Page<Exam> findAllPendingRecordsWithPagination(Pageable p);
+
+    @Query("from  Exam e where e.status='ENDED'")
+    Page<Exam> findAllCompletedRecordsWithPagination(Pageable p);
 }

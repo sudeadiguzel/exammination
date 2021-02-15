@@ -39,14 +39,21 @@ public class ExamService {
         return examRepository.save(exam);
     }
 
-    public List<Exam> getAllActiveRecords(){
+    public List<Exam> getAllRecordsOfStudent(){
         return examRepository.findAllActiveRecords();
     }
     public List<Exam> getAllPendingRecords(){
         return examRepository.findAllPendingRecords();
     }
+    public Page<Exam> getAllPendingRecordsWithPagination(DatatableRequest request){
+        return examRepository.findAllPendingRecordsWithPagination(request.toPageRequest());
+    }
 
-    public Page<Exam> getAllActiveRecords(DatatableRequest request) {
+    public Page<Exam> getAllCompletedRecordsWithPagination(DatatableRequest request){
+        return examRepository.findAllCompletedRecordsWithPagination(request.toPageRequest());
+    }
+
+    public Page<Exam> getAllRecordsOfStudent(DatatableRequest request) {
         return examRepository.findRecords(request.toPageRequest());
     }
 
@@ -57,7 +64,7 @@ public class ExamService {
 
     public Page<Exam> getActivesForInstructor(DatatableRequest request) {
         User user = userAuthService.getCurrentUser();
-        return examRepository.findActiveRecordsForInstructorByStatus(user.getDb_id(), StatusType.ACTIVE, request.toPageRequest());
+        return examRepository.findActiveRecordsForStudentWithPaging(request.toPageRequest());
     }
 
 

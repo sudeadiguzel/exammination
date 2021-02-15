@@ -4,7 +4,7 @@
       layout:decorate="sharedTemplates/Layout">
 <head>
     <meta charset="utf-8"/>
-    <title>Square Buttons Effects Template | PrepBootstrap</title>
+    <title>Homepage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
@@ -16,28 +16,6 @@
 <body layout:fragment="instructorContent">
 
 <div class="container">
-
-
-    <!-- Square Buttons Effects - START -->
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>Instructor Controller Panel</h2>
-                <p>
-                    <a th:href="@{/instructor/exam/createPage}" class="btn btn-squared-default btn-primary">
-                        <i class="fa fa-key fa-5x"></i>
-                        <br/>
-                        Create
-                        <br/>
-                        Exam
-                    </a>
-                </p>
-            </div>
-        </div>
-
-    </div>
-
-
     <div class="table-responsive">
         <table class="table table-bordered table-striped" id="table">
             <thead>
@@ -114,8 +92,12 @@
                     "targets": 5,
                     "data": "id",
                      "render": function (data) {
+                        console.log("/*/*/*/*/*/*/*/*/*//*/*/*//*/*/*/")
+                         console.log(data)
+                        console.log("/*/*/*/*/*/*/*/*/*//*/*/*//*/*/*/")
                          var buttons=[];
                          buttons.push('<a href="/instructor/exam/detail/' + data + '" data-toggle=\'tooltip\' title=\'Edit\'><i class=\'fa fa-pencil text-info\'></i></a>');
+                         buttons.push('<input name="/instructor/exam/detail/' + data + '" data-toggle=\'tooltip\' title=\'Edit\'></input>')
                         buttons.push('<a href="/instructor/exam/resultDetail/' + data + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></i></a>');
                         return buttons;
                     }}, ]

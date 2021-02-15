@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="sharedTemplates/Layout">
+<head th:replace="Layout :: html_head"/>
+<body layout:fragment="examContent">
+<div class="container">
+    <form method="POST" th:object="${exam}" action="/instructor/save/">
+        <div class="card" style="border: 2px solid;" th:name="|question-'${j}'|"
+             th:each="question: ${exam.question}">
+            <div class="card-header">
+                <div class="form-group row">
+                    <label th:for="|questionInput-'${j}'|" class="col-sm-2 col-form-label">Question:</label>
+                    <div class="col-sm-10">
+                        <label type="text" th:text="${exam.question[__${question.number}__].description}"
+                               th:name="description" class="form-control"
+                               th:id="|questionInput-'${j}'|" required th:placeholder="${question.description}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" th:each="option: ${question.optionList}">
+
+
+                <div th:styleappend="${exam.question[__${question.number}__].optionList[__${option.index}__].correct} != ${grade.solves[__${question.number}__].answers[__${option.index}__].correct}? 'background-color:#ff9999-':''">
+
+                    <div th:styleappend="${exam.question[__${question.number}__].optionList[__${option.index}__].correct}? 'background-color:#85cc85':''">
+                        <div id='block-11' style='padding: 5px;'>
+
+                            <div class="form-group" th:required="true">
+                                <label th:text="${exam.question[__${question.number}__].optionList[__${option.index}__].content}"
+                                       required th:name="content"
+                                       placeholder="Option"/>
+
+                                <div class="form-group" th:required="true">
+
+                                    <input disabled="disabled" onclick="return false;"
+                                           th:field="${exam.question[__${question.number}__].optionList[__${option.index}__].correct}"
+                                           type="radio" th:id='|optionAnswer-"${i}"|' th:value='true'
+                                           style="float:right">
+                                </div>
+                                <span id='result-11'></span>
+                            </div>
+                        </div>
+                        <br>
+                        <hr/>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-outline-primary" style="float:right;">Submit</button>
+        <br>
+
+
+    </form>
+</div>
+</body>
+</html>

@@ -18,6 +18,7 @@
             <th>Sınav İsmi</th>
             <th>Başlangıç Tarihi</th>
             <th>Bitiş Tarihi</th>
+            <th>Actions</th>
         </tr>
         </thead>
     </table>
@@ -36,7 +37,9 @@
     <script src="../static/js/jquery.dataTables.min.js" th:src="@{/js/jquery.dataTables.min.js}"></script>
     <script src="../static/js/dataTables.bootstrap4.min.js" th:src="@{/js/dataTables.bootstrap4.min.js}"></script>
     <script src="../static/js/datatableInitializer.js" th:src="@{/js/datatableInitializer.js}"></script>
+
     <script>
+
         $(document).ready(function () {
             DatatableUtils.initializer("#table", {
                 ajax: {
@@ -46,17 +49,26 @@
                 columnDefs: [{
                     "targets": 0,
                     "data": "id",
-                    "render": DatatableUtils.renderRoute('/exam')
+                    // "render": DatatableUtils.renderRoute('/exam')
                 }, {
                     "targets": 1,
                     "data": "name",
                 }, {
                     "targets": 2,
-                    "data": "name",
+                    "data": "startDate",
                 }, {
                     "targets": 3,
-                    "data": "name",
-                }, ]
+                    "data": "endDate",
+                },{
+                    "targets": 5,
+                    "data": "id",
+                    "render": function (data) {
+                        var buttons=[];
+                        var $gradeService = [[$gradeService]]
+                        buttons.push('<a href="/instructor/exam/detail/' + data + '" data-toggle=\'tooltip\' title=\'Edit\'><i class=\'fa fa-pencil text-info\'></i></a>');
+                        buttons.push('<a href="/instructor/exam/resultDetail/' + data + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></i></a>');
+                        return buttons;
+                    }}, ]
             });
         });
     </script>
