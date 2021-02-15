@@ -30,4 +30,7 @@ public interface GradeRepository extends JpaRepository<Grade,Long> {
 
     @Query("from Grade g where g.student.db_id=:studentId")
     List<Grade> getAllByStudentId(Long studentId);
+
+    @Query("FROM Grade g where g.exam.id=:examId and g.student.db_id=:studentId")
+    Grade getByExamIdAndStudentId(Long examId,Long studentId);
 }

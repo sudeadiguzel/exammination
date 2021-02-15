@@ -47,14 +47,8 @@
                         "data": "score",
                     }, {
                         "targets": 3,
-                        "data": "id",
-                        "render": function () {
-                            var stdid = [[${student.db_id}]];
-                            var buttons=[];
-                            buttons.push('<a href="/grade/' + stdid + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></i></a>');
-                            return buttons;
-                        }
-                    }]
+                        "data": "student.db_id",
+                        "render": DatatableUtils.renderStudentGradeOperation(id)}]
                 });
             });
         </script>

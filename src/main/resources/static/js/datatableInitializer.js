@@ -132,6 +132,18 @@ var DatatableUtils = {
 
         }
     },
+
+
+    renderStudentGradeOperation: function (examId) {
+
+        return function (data, type, row) {
+            console.log(data)
+            console.log(data)
+
+            return ('<a href="/grade/'+examId+'/'+data+'" data-toggle=\'tooltip\' aria-hidden=\'true\' title=\'Show Result\'><i class="fas fa-poll"></i></i></a>');
+
+        }
+    },
     renderActions: function (url = '', actions = ['edit', 'remove'], idParam = 'id') {
         return function (data, type, row) {
             if (!Array.isArray(actions)) {

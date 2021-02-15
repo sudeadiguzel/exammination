@@ -27,5 +27,16 @@ public class GradeController {
         model.addAttribute("exam",examService.getExamById(id).get());
         return "/exam/grade";
     }
+    @GetMapping("/{exam_id}/{student_id}")
+    public String getExamGradeByStudentId(@PathVariable("exam_id")Long examId,@PathVariable("student_id")Long studentId, Model model){
+        Grade grade = gradeService.getGradeByStudentAndExamId(examId,studentId);
+        if (grade == null){
+            //TODO exam not ended page.
+            return "redirect:/home";
+        }
+        model.addAttribute("grade",grade);
+        model.addAttribute("exam",examService.getExamById(examId).get());
+        return "/exam/grade";
+    }
 
 }

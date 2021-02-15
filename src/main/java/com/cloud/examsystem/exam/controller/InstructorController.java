@@ -84,8 +84,7 @@ public class InstructorController {
         return "Instructor/edit";
     }
 
-    @GetMapping("exam/resultDetail/{id:\\d+}")
-    @ResponseBody
+    @GetMapping("exam/resultDetail/{id}")
     public String examResultPage(@PathVariable("id") Long examId,Model model){
         model.addAttribute("examId",examId);
         return "./Instructor/ResultsPage";

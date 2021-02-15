@@ -41,6 +41,10 @@ public class GradeService {
         return appliedExams;
     }
 
+    public Grade getGradeByStudentAndExamId(Long examId,Long studentId){
+        return gradeRepository.getByExamIdAndStudentId(examId,studentId);
+    }
+
     public Page<Grade> getAllResultsbyStudentId(DatatableRequest request, Long gradeId) {
         User user = userAuthService.getCurrentUser();
         return gradeRepository.findStudentGrades(user.getDb_id(), gradeId, request.toPageRequest());
