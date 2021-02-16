@@ -38,7 +38,7 @@ public class ExamController {
     @PostMapping("/")
     public String applyExam(@ModelAttribute Exam model) {
         examService.solve(model);
-        return "redirect:/homepage";
+        return "redirect:/common/homepage";
     }
 
     @GetMapping("/list/pending")

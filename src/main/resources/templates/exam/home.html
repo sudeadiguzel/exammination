@@ -35,7 +35,8 @@
                 <th>Sınav İsmi</th>
                 <th>Başlangıç Tarihi</th>
                 <th>Bitiş Tarihi</th>
-                <th>Start</th>
+                <th>Status</th>
+                <th>Activate</th>
             </tr>
             </thead>
         </table>
@@ -79,9 +80,7 @@
     <script>
         var gradeList = [[${appliedExams}]];
 
-        console.log("9999999999999999999999999999999")
-        console.log(gradeList)
-        console.log("999999999999999999999999999999999")
+
     $(document).ready(function () {
       DatatableUtils.initializer("#table", {
         ajax: {
@@ -96,13 +95,19 @@
           "data": "name",
         }, {
           "targets": 2,
-          "data": "name",
-        }, {
+          "data": "startDate",
+          "render":DatatableUtils.renderDateTime('startDate')
+        },{
           "targets": 3,
+          "data": "endDate",
+          "render":DatatableUtils.renderDateTime('endDate')
+        },
+         {
+          "targets": 4,
           "data": "status",
             "render":DatatableUtils.renderStatus('status')
         },  {
-          "targets": 4,
+          "targets": 5,
           "data": "id",
           "render": DatatableUtils.renderStudentActions("id",gradeList
       )

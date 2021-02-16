@@ -37,6 +37,3 @@ logging:
           descriptor:
             sql:
               BasicBinder: INFO
-  file:
-    path: /log
-    name: my.log
