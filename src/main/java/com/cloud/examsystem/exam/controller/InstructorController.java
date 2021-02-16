@@ -122,7 +122,7 @@ public class InstructorController {
     @GetMapping("exam/resultDetail/{id}")
     public String examResultPage(@PathVariable("id") Long examId, Model model) {
         model.addAttribute("examId", examId);
-        return "exam_application_list";
+        return "instructor/exam_application_list";
     }
 
     @PostMapping("/exam/results/{id:\\d+}")

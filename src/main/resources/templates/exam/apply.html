@@ -34,8 +34,8 @@
                         <div class="form-group" th:required="true">
 
                             <input
-                                    th:field="${data.question[__${question.number}__].optionList[__${option.index}__].correct}"
-                                    type="radio" th:id='|optionAnswer-"${i}"|' th:value='true' style="float:right">
+                                    th:name="${data.question[__${question.number}__].optionList[__${option.index}__].correct}"
+                                    type="radio" th:id='|optionAnswer-"${i}"|' th:value="true" style="float:right">
                         </div>
                         <span id='result-11'></span>
                     </div>

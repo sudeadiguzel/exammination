@@ -91,13 +91,28 @@ var DatatableUtils = {
                 ;
             }) != null);
             console.log("------------------");
+            console.log(gradeList.map((i) => {
+                if (i == idParam) {
+                    console.log("*****************")
+                    console.log(i)
+                    console.log(idParam)
+                    console.log("*****************")
+                    return true
+                }
+                ;
+            }));
+            console.log("------------------");
             if (row["status"] === 'ACTIVE') {
                 if (gradeList.map((i) => {
                     if (i == idParam) {
+                        console.log("*****************")
+                        console.log(i)
+                        console.log(idParam)
+                        console.log("*****************")
                         return true
                     }
                     ;
-                }) != null) {
+                }).length>0 && gradeList.length>0) {
                     return ('<a' + row[idParam] + '" data-toggle=\'tooltip\' aria-hidden=\'true\' title=\'Show Result\'><i class="fas fa-poll"></i></i></a>');
 
                 } else {
