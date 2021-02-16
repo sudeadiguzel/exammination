@@ -79,40 +79,17 @@ var DatatableUtils = {
     },
 
     renderStudentActions: function (idParam, gradeList = []) {
-        // console.log("---------------------")
-        // console.log(gradeList)
-        // console.log("---------------------")
         return function (data, type, row) {
-            console.log("------------------");
-            console.log(gradeList.map((i) => {
-                if (i == idParam) {
-                    return true
-                }
-                ;
-            }) != null);
-            console.log("------------------");
-            console.log(gradeList.map((i) => {
-                if (i == idParam) {
-                    console.log("*****************")
-                    console.log(i)
-                    console.log(idParam)
-                    console.log("*****************")
-                    return true
-                }
-                ;
-            }));
-            console.log("------------------");
             if (row["status"] === 'ACTIVE') {
-                if (gradeList.map((i) => {
-                    if (i == idParam) {
-                        console.log("*****************")
-                        console.log(i)
-                        console.log(idParam)
-                        console.log("*****************")
-                        return true
+                let state = false;
+                gradeList.forEach((i) => {
+                    if (i == row[idParam]) {
+                        state = true;
+
                     }
                     ;
-                }).length>0 && gradeList.length>0) {
+                })
+                if (state && gradeList.length>0) {
                     return ('<a' + row[idParam] + '" data-toggle=\'tooltip\' aria-hidden=\'true\' title=\'Show Result\'><i class="fas fa-poll"></i></i></a>');
 
                 } else {
@@ -129,19 +106,12 @@ var DatatableUtils = {
             return buttons;
         }
     }, renderTeacherActions: function (idParam, gradeList = []) {
-        // console.log("---------------------")
-        // console.log(gradeList)
-        // console.log("---------------------")
         return function (data, type, row) {
             var buttons = [];
-
-
             if (row["status"] = 'ENDED') {
                 buttons.push('<a href="/exam/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Apply\'><i class=\'fa fa-pencil text-info\'></i></a>');
             } else {
-
                 buttons.push('<a href="/grade/' + row[idParam] + '" data-toggle=\'tooltip\' title=\'Show Result\'><i class="fas fa-poll"></i></i></a>');
-
             }
             return buttons;
 

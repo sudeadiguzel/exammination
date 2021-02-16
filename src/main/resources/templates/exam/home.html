@@ -78,6 +78,10 @@
     <script src="../static/js/datatableInitializer.js" th:src="@{/js/datatableInitializer.js}"></script>
     <script>
         var gradeList = [[${appliedExams}]];
+
+        console.log("9999999999999999999999999999999")
+        console.log(gradeList)
+        console.log("999999999999999999999999999999999")
     $(document).ready(function () {
       DatatableUtils.initializer("#table", {
         ajax: {
