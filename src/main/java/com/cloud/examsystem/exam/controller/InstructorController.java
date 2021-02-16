@@ -29,38 +29,71 @@ public class InstructorController {
     UserAuthService userAuthService;
     ExamService examService;
     GradeService gradeService;
+
     @GetMapping
     public String createInstructorPage(Model model) {
-
-//        model.addAttribute("type","all");
         return "Instructor/InstructorHome";
     }
 
     @GetMapping("exam/actives")
     public String getActiveExamsListPage(Model model) {
-
-//        model.addAttribute("type","active");
-        return "Instructor/InstructorHome";
+        return "Instructor/active_list";
     }
+
+    @GetMapping("exam/passives")
+    public String getPassiveExamsListPage(Model model) {
+        return "Instructor/passive_list";
+    }
+
+    @GetMapping("exam/pendings")
+    public String getPendingExamsListPage(Model model) {
+
+        return "Instructor/pending_list";
+    }
+
+    @GetMapping("exam/completed")
+    public String getCompletedExamsListPage(Model model) {
+
+        return "Instructor/completed_list";
+    }
+
     @PostMapping("exam/list")
     @ResponseBody
     public Map getAllExamsList(DatatableRequest request) {
-        return PaginationUtils.createResultSet(examService.getActivesForInstructor(request), request);
+        return PaginationUtils.createResultSet(examService.findAllRecordsForInstructorWithPaging(request), request);
     }
+
     @PostMapping("exam/actives")
     @ResponseBody
     public Map getActiveExamsList(DatatableRequest request) {
         return PaginationUtils.createResultSet(examService.getActivesForInstructor(request), request);
     }
+    @PostMapping("exam/completed")
+    @ResponseBody
+    public Map getCompletedExamsList(DatatableRequest request) {
+        return PaginationUtils.createResultSet(examService.getCompletedForInstructor(request), request);
+    }
+
+    @PostMapping("exam/pendings")
+    @ResponseBody
+    public Map getPendingExamsList(DatatableRequest request) {
+        return PaginationUtils.createResultSet(examService.getPendingsForInstructor(request), request);
+    }
+
+    @PostMapping("exam/passives")
+    @ResponseBody
+    public Map getPassiveExamsList(DatatableRequest request) {
+        return PaginationUtils.createResultSet(examService.getPassiveForInstructor(request), request);
+    }
 
     @GetMapping("exam/create")
-    public String createQuestionPage(Model model,@ModelAttribute("counts") countPage counts){
-        Exam exam = new Exam(counts.getQuestionCount(),counts.getOptionCount());
+    public String createQuestionPage(Model model, @ModelAttribute("counts") countPage counts) {
+        Exam exam = new Exam(counts.getQuestionCount(), counts.getOptionCount());
         log.info(counts);
         try {
-            Date dateStart=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(counts.getStartDate());
+            Date dateStart = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(counts.getStartDate());
             exam.setStartDate(dateStart);
-            Date dateEnd=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(counts.getEndDate());
+            Date dateEnd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(counts.getEndDate());
             exam.setEndDate(dateEnd);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -72,6 +105,7 @@ public class InstructorController {
 //        model.addAttribute("optionCount",counts.getOptionCount());
         return "exam/create_exam";
     }
+
     @GetMapping("exam/createPage")
     public String createExamPage() {
 
@@ -85,21 +119,20 @@ public class InstructorController {
     }
 
     @GetMapping("exam/resultDetail/{id}")
-    public String examResultPage(@PathVariable("id") Long examId,Model model){
-        model.addAttribute("examId",examId);
+    public String examResultPage(@PathVariable("id") Long examId, Model model) {
+        model.addAttribute("examId", examId);
         return "./Instructor/ResultsPage";
     }
 
     @PostMapping("/exam/results/{id:\\d+}")
     @ResponseBody
-    public Map getGradeList(@PathVariable("id") Long examId, DatatableRequest request){
-      return PaginationUtils.createResultSet(gradeService.getAllbyExamIdAsPage(request,examId),request);
+    public Map getGradeList(@PathVariable("id") Long examId, DatatableRequest request) {
+        return PaginationUtils.createResultSet(gradeService.getAllbyExamIdAsPage(request, examId), request);
     }
 
 
     @PostMapping("save")
-    public String postDeneme(@ModelAttribute("data")Exam model)
-    {
+    public String postDeneme(@ModelAttribute("data") Exam model) {
         examService.save(model);
         log.info(model);
         return "redirect:/instructor/";

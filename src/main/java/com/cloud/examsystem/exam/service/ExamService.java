@@ -1,7 +1,6 @@
 package com.cloud.examsystem.exam.service;
 
 import com.cloud.examsystem.common.dto.DatatableRequest;
-import com.cloud.examsystem.exam.common.StatusType;
 import com.cloud.examsystem.exam.entity.Exam;
 import com.cloud.examsystem.exam.model.Question;
 import com.cloud.examsystem.exam.model.QuestionAnswerDTO;
@@ -35,21 +34,27 @@ public class ExamService {
         return examRepository.save(exam);
     }
 
-    public Exam updateExam(Exam exam){
+    public Exam updateExam(Exam exam) {
         return examRepository.save(exam);
     }
 
-    public List<Exam> getAllRecordsOfStudent(){
+    public List<Exam> getAllRecordsOfStudent() {
         return examRepository.findAllActiveRecords();
     }
-    public List<Exam> getAllPendingRecords(){
+
+    public List<Exam> getAllPendingRecords() {
         return examRepository.findAllPendingRecords();
     }
-    public Page<Exam> getAllPendingRecordsWithPagination(DatatableRequest request){
+
+    public Page<Exam> getAllPendingRecordsWithPagination(DatatableRequest request) {
         return examRepository.findAllPendingRecordsWithPagination(request.toPageRequest());
     }
 
-    public Page<Exam> getAllCompletedRecordsWithPagination(DatatableRequest request){
+    public Page<Exam> getAllActiveRecordsWithPagination(DatatableRequest request) {
+        return examRepository.findAllActiveRecordsWithPagination(request.toPageRequest());
+    }
+
+    public Page<Exam> getAllCompletedRecordsWithPagination(DatatableRequest request) {
         return examRepository.findAllCompletedRecordsWithPagination(request.toPageRequest());
     }
 
@@ -57,14 +62,31 @@ public class ExamService {
         return examRepository.findRecords(request.toPageRequest());
     }
 
-    public Page<Exam> getAllForInstructor(DatatableRequest request) {
+    public Page<Exam> findAllRecordsForInstructorWithPaging(DatatableRequest request) {
         User user = userAuthService.getCurrentUser();
         return examRepository.findAllRecordsForInstructor(user.getDb_id(), request.toPageRequest());
     }
 
     public Page<Exam> getActivesForInstructor(DatatableRequest request) {
         User user = userAuthService.getCurrentUser();
-        return examRepository.findActiveRecordsForStudentWithPaging(request.toPageRequest());
+        Long instructorId = userAuthService.getCurrentUser().getDb_id();
+        return examRepository.findActiveRecordsForInstructorWithPaging(instructorId, request.toPageRequest());
+    }
+
+    public Page<Exam> getCompletedForInstructor(DatatableRequest request) {
+        User user = userAuthService.getCurrentUser();
+        Long instructorId = userAuthService.getCurrentUser().getDb_id();
+        return examRepository.findCompletedRecordsForInstructorWithPaging(instructorId, request.toPageRequest());
+    }
+
+    public Page<Exam> getPendingsForInstructor(DatatableRequest request) {
+        User user = userAuthService.getCurrentUser();
+        return examRepository.findPendingRecordsForInstructorWithPaging(user.getDb_id(), request.toPageRequest());
+    }
+
+    public Page<Exam> getPassiveForInstructor(DatatableRequest request) {
+        User user = userAuthService.getCurrentUser();
+        return examRepository.findPassiveRecordsForInstructorWithPaging(user.getDb_id(), request.toPageRequest());
     }
 
 
@@ -84,7 +106,7 @@ public class ExamService {
             } else {
                 answerDTO.setCorrect(true);
                 answerDTO.setStudentScore(q.getScore());
-                totalScore+=q.getScore();
+                totalScore += q.getScore();
             }
 
             answerDTO.setQuestionNumber(q.getNumber());

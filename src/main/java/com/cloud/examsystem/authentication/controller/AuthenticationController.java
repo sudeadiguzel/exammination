@@ -92,7 +92,7 @@ public class AuthenticationController {
     public String getPendingExamListPage(Model model){
         if(userAuthService.getCurrentUser().isInstructor()){
             //TODO
-            return "redirect:/instructor";
+            return "redirect:/instructor/exam/pendings";
         }
         return "redirect:/exam/list/pending";
     }
@@ -109,13 +109,13 @@ public class AuthenticationController {
         if(userAuthService.getCurrentUser().isInstructor()){
             return "redirect:/instructor/exam/actives";
         }
-        return "redirect:/exam/actives";
+        return "redirect:/exam/list/actives";
     }
     @GetMapping("/completed")
     public String getCompletedExamsListPage(Model model){
         if(userAuthService.getCurrentUser().isInstructor()){
             //TODO
-            return "redirect:/instructor/exam/actives";
+            return "redirect:/instructor/exam/completed";
         }
 
         return "redirect:/exam/list/completed";

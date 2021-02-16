@@ -35,24 +35,23 @@
                 <a class="nav-link" href="/homepage">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="/home" id="navbarDropdown" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle" href="/homepage" id="navbarDropdown" role="button"
+                   data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     Exams
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <div th:if="${currentUser.isInstructor()}">
 
-                        <a class="dropdown-item" href="#"><i class="fas fa-stopwatch pr-2"
-                                                             style="size: 3px; color: #7face4"></i>Active</a>
-                    </div>
+                    <a class="dropdown-item" href="/actives"><i class="fas fa-stopwatch pr-2"
+                                                                                style="size: 3px; color: #7face4"></i>Active</a>
                     <a class="dropdown-item" href="/pendingExams"><i class="fas fa-business-time pr-2"
                                                                      style="size: 3px; color: #3e4143"></i>Pending</a>
                     <a class="dropdown-item" href="/completed"><i class="fas fa-check-circle pr-2"
-                                                         style="size: 3px; color: #277011"></i>Ended</a>
+                                                                  style="size: 3px; color: #277011"></i>Ended</a>
                     <div th:if="${currentUser.isInstructor()}">
 
-                        <a class="dropdown-item" href="#"><i class="fas fa-file-excel pr-2"
-                                                             style="size: 3px; color: #d78529"></i>Passive</a>
+                        <a class="dropdown-item" href="/instructor/exam/passives"><i class="fas fa-file-excel pr-2"
+                                                                                     style="size: 3px; color: #d78529"></i>Passive</a>
                     </div>
 
                     <div th:if="${currentUser.isInstructor()}">

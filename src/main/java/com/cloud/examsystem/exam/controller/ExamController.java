@@ -58,6 +58,17 @@ public class ExamController {
         return PaginationUtils.createResultSet(examService.getAllPendingRecordsWithPagination(request), request);
     }
 
+       @GetMapping("/list/actives")
+    public String getActiveExamListPage() {
+        return "/exam/active_list";
+    }
+
+    @PostMapping("/list/actives")
+    @ResponseBody
+    public Map getActiveExamList(DatatableRequest request) {
+        return PaginationUtils.createResultSet(examService.getAllActiveRecordsWithPagination(request), request);
+    }
+
     @GetMapping("/list/completed")
     public String getCompletedExamListPage() {
         return "/exam/completed_list";
