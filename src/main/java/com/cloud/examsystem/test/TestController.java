@@ -26,9 +26,9 @@ public class TestController {
         Optional<Exam> exam = examService.getExamById(5L);
         if (exam.isPresent()) {
             model.addAttribute("data",exam.get());
-            return "/Instructor/edit";
+            return "/instructor/edit";
         }
 
-        return "/Instructor/Home";
+        return "/instructor/Home";
     }
 }

@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="sharedTemplates/Layout">
+      layout:decorate="shared-templates/layout">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body layout:fragment="createExamContent">
+<div class="container text-center">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Instructor Controller Panel</h2>
+            <h5>Create Exam Parameters</h5>
+        </div>
+    </div>
 
+</div>
 <form method="GET" id="create-form" th:object="${counts}" th:action="@{/instructor/exam/create}" novalidate>
     <div class="form-group row">
         <label for="start" class="col-2 col-form-label">Exam Start Time</label>

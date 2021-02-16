@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.rmi.UnexpectedException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,29 +33,29 @@ public class InstructorController {
 
     @GetMapping
     public String createInstructorPage(Model model) {
-        return "Instructor/InstructorHome";
+        return "/instructor/home";
     }
 
     @GetMapping("exam/actives")
     public String getActiveExamsListPage(Model model) {
-        return "Instructor/active_list";
+        return "instructor/active_list";
     }
 
     @GetMapping("exam/passives")
     public String getPassiveExamsListPage(Model model) {
-        return "Instructor/passive_list";
+        return "instructor/passive_list";
     }
 
     @GetMapping("exam/pendings")
     public String getPendingExamsListPage(Model model) {
 
-        return "Instructor/pending_list";
+        return "instructor/pending_list";
     }
 
     @GetMapping("exam/completed")
     public String getCompletedExamsListPage(Model model) {
 
-        return "Instructor/completed_list";
+        return "instructor/completed_list";
     }
 
     @PostMapping("exam/list")
@@ -103,25 +104,25 @@ public class InstructorController {
         log.info(exam);
 //        model.addAttribute("data",counts.getQuestionCount());
 //        model.addAttribute("optionCount",counts.getOptionCount());
-        return "exam/create_exam";
+        return "/instructor/create_exam";
     }
 
     @GetMapping("exam/createPage")
     public String createExamPage() {
 
-        return "/Instructor/createExamPage";
+        return "/instructor/get_exam_parameter";
     }
 
     @GetMapping("exam/detail/{id}")
     public String examEdit(@PathVariable("id") Long examId, Model model) {
         model.addAttribute("data", examService.getExamById(examId).get());
-        return "Instructor/edit";
+        return "instructor/edit";
     }
 
     @GetMapping("exam/resultDetail/{id}")
     public String examResultPage(@PathVariable("id") Long examId, Model model) {
         model.addAttribute("examId", examId);
-        return "./Instructor/ResultsPage";
+        return "exam_application_list";
     }
 
     @PostMapping("/exam/results/{id:\\d+}")
@@ -136,6 +137,12 @@ public class InstructorController {
         examService.save(model);
         log.info(model);
         return "redirect:/instructor/";
+    }
+
+    @GetMapping("exam/activate/{examId}")
+    public String activeExamById(@PathVariable("examId") Long examId) throws UnexpectedException {
+        examService.activateExam(examId);
+        return "redirect:/instructor/exam/actives";
     }
 
 }

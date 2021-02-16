@@ -1,6 +1,7 @@
 package com.cloud.examsystem.exam.service;
 
 import com.cloud.examsystem.common.dto.DatatableRequest;
+import com.cloud.examsystem.exam.common.StatusType;
 import com.cloud.examsystem.exam.entity.Exam;
 import com.cloud.examsystem.exam.model.Question;
 import com.cloud.examsystem.exam.model.QuestionAnswerDTO;
@@ -9,10 +10,13 @@ import com.cloud.examsystem.grade.entity.Grade;
 import com.cloud.examsystem.grade.service.GradeService;
 import com.cloud.examsystem.user.entity.User;
 import com.cloud.examsystem.user.service.UserAuthService;
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 
+import java.rmi.UnexpectedException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -115,7 +119,17 @@ public class ExamService {
         }
         grade.setScore(totalScore);
         gradeService.save(grade);
+    }
 
-
+    public void activateExam(Long examId) throws UnexpectedException {
+        Optional<Exam> examOptional = examRepository.getById(examId);
+        if (examOptional.isPresent()){
+            Exam exam = examOptional.get();
+            exam.setStatus(StatusType.ACTIVE);
+            examRepository.save(exam);
+        }
+        else {
+            throw new UnexpectedException("Id not Found.");
+        }
     }
 }

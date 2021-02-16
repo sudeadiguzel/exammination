@@ -79,7 +79,7 @@ public class AuthenticationController {
 
 
 
-    @GetMapping("/homepage")
+    @GetMapping("/common/homepage")
     public String getHomePage(Model model){
         int a=1;
         if(userAuthService.getCurrentUser().isInstructor()){
@@ -88,7 +88,7 @@ public class AuthenticationController {
         return "redirect:/exam/home";
     }
 
-    @GetMapping("/pendingExams")
+    @GetMapping("/common/pending")
     public String getPendingExamListPage(Model model){
         if(userAuthService.getCurrentUser().isInstructor()){
             //TODO
@@ -97,21 +97,21 @@ public class AuthenticationController {
         return "redirect:/exam/list/pending";
     }
 
-    @GetMapping("/all")
+    @GetMapping("/common/all")
     public String getAllPage(Model model){
         if(userAuthService.getCurrentUser().isInstructor()){
             return "redirect:/instructor";
         }
         return "redirect:/exam/home";
     }
-    @GetMapping("/actives")
+    @GetMapping("/common/actives")
     public String getActivesPage(Model model){
         if(userAuthService.getCurrentUser().isInstructor()){
             return "redirect:/instructor/exam/actives";
         }
         return "redirect:/exam/list/actives";
     }
-    @GetMapping("/completed")
+    @GetMapping("/common/completed")
     public String getCompletedExamsListPage(Model model){
         if(userAuthService.getCurrentUser().isInstructor()){
             //TODO

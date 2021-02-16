@@ -29,7 +29,7 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
     @Query("FROM Exam e where e.status='ENDED' and e.user.db_id=:instructorId")
     Page<Exam> findCompletedRecordsForInstructorWithPaging(Long instructorId, Pageable p);
 
-    @Query("FROM Exam e where e.status='ACTIVE' and e.user.db_id=:instructorId")
+    @Query("FROM Exam e where e.status='PASSIVE' and e.user.db_id=:instructorId")
     Page<Exam> findPassiveRecordsForInstructorWithPaging(Long instructorId, Pageable p);
 
     @Query("FROM Exam e where e.status='PENDING' and e.user.db_id=:instructorId")

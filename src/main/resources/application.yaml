@@ -5,9 +5,9 @@ spring:
   main:
     banner-mode=off:
   datasource:
-    url: jdbc:postgresql://localhost:5433/cloud
-    username: cloud
-    password: cloud
+    url: jdbc:postgresql://examminationdb.postgres.database.azure.com:5432/postgres
+    username: exammination@examminationdb
+    password: dbPassword*
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -37,5 +37,6 @@ logging:
           descriptor:
             sql:
               BasicBinder: INFO
-
-
+  file:
+    path: /log
+    name: my.log

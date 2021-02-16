@@ -41,12 +41,6 @@ public class ExamController {
         return "redirect:/homepage";
     }
 
-    @GetMapping("/list")
-    public String getExamListPage(Model model) {
-
-        return "/exam/exam_list";
-    }
-
     @GetMapping("/list/pending")
     public String getPendingExamListPage() {
         return "/exam/pending_list";
