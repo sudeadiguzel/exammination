@@ -33,7 +33,7 @@ public class InstructorController {
 
     @GetMapping
     public String createInstructorPage(Model model) {
-        return "/instructor/home";
+        return "instructor/home";
     }
 
     @GetMapping("exam/actives")

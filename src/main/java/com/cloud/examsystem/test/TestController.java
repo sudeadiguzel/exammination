@@ -29,6 +29,6 @@ public class TestController {
             return "/instructor/edit";
         }
 
-        return "/instructor/Home";
+        return "instructor/Home";
     }
 }

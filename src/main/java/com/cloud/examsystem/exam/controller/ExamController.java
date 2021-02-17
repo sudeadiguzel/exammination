@@ -29,10 +29,10 @@ public class ExamController {
     public String getExamById(@PathVariable("id") Long id, Model model) {
         Optional<Exam> examOpt = examService.getExamById(id);
         if (!examOpt.isPresent()) {
-            return "/error";
+            return "error";
         }
-        model.addAttribute("data", examOpt.get());
-        return "/exam/apply";
+        model.addAttribute("data", ExamConverter.ExamModelToStudentDTO(examOpt.get()));
+        return "exam/apply";
     }
 
     @PostMapping("/")
@@ -85,14 +85,14 @@ public class ExamController {
     public String createQuestionPage(Model model) {
         model.addAttribute("question_number", 3);
         model.addAttribute("option_number", 4);
-        return "/exam/create_exam";
+        return "exam/create_exam";
     }
 
 
     @GetMapping("/home")
     public String startExam(Model model) {
         model.addAttribute("appliedExams", gradeService.getAllbyStudentId(authService.getCurrentUser().getDb_id()));
-        return "/exam/home";
+        return "exam/home";
     }
 
     @PostMapping("/exam/list")
