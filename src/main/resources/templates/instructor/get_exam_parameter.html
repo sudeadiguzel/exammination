@@ -20,13 +20,13 @@
     <div class="form-group row">
         <label for="name" class="col-2 col-form-label">Exam name</label>
         <div class="col-10">
-            <input class="form-control" type="text" id="name" th:name="name">
+            <input class="form-control" type="text" required id="name" th:name="name">
         </div>
     </div>
     <div class="form-group row">
         <label for="start" class="col-2 col-form-label">Exam Start Time</label>
         <div class="col-10">
-            <input class="form-control" type="datetime-local" id="start" th:name="startDate">
+            <input class="form-control" required type="datetime-local" id="start" th:name="startDate">
         </div>
     </div>
     <div class="form-group row">
@@ -41,7 +41,7 @@
     </div>
     <div class="form-group">
         <label th:for="|optionCount|">Option Count</label>
-        <input type="number" class="form-control" th:id="|optionCount|" th:name="|optionCount|">
+        <input type="number" class="form-control" th:id="|optionCount|" th:name="|optionCount|" required>
     </div>
     <button type="submit" class="btn btn-squared-default btn-primary"  >Submit</button>
 </form>
