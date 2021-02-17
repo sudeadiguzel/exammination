@@ -15,6 +15,7 @@ public class countPage {
     Integer optionCount;
     String startDate;
     String endDate;
+    String name;
 
     public countPage() {
 

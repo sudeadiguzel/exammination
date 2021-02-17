@@ -5,7 +5,7 @@
 <head th:replace="layout :: html_head"/>
 <body layout:fragment="examContent">
 <div class="container">
-    <form method="POST" th:object="${data}" action="/instructor/save/">
+    <form method="POST" th:object="${data}" action="/instructor/save/" novalidate>
         <input th:field="${data.id}" th:value="${data.id}" type="hidden"/>
         <input th:field="${data.startDate}" th:value="${data.startDate}" type="hidden"/>
         <input th:field="${data.endDate}" th:value="${data.endDate}" type="hidden"/>

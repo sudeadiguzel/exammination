@@ -96,6 +96,7 @@ public class InstructorController {
             exam.setStartDate(dateStart);
             Date dateEnd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(counts.getEndDate());
             exam.setEndDate(dateEnd);
+            exam.setName(counts.getName());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -104,13 +105,13 @@ public class InstructorController {
         log.info(exam);
 //        model.addAttribute("data",counts.getQuestionCount());
 //        model.addAttribute("optionCount",counts.getOptionCount());
-        return "/instructor/create_exam";
+        return "instructor/create_exam";
     }
 
     @GetMapping("exam/createPage")
     public String createExamPage() {
 
-        return "/instructor/get_exam_parameter";
+        return "instructor/get_exam_parameter";
     }
 
     @GetMapping("exam/detail/{id}")
@@ -136,7 +137,7 @@ public class InstructorController {
     public String postDeneme(@ModelAttribute("data") Exam model) {
         examService.save(model);
         log.info(model);
-        return "redirect:/instructor/";
+        return "redirect:/instructor";
     }
 
     @GetMapping("exam/activate/{examId}")

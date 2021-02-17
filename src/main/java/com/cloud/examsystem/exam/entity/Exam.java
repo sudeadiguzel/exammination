@@ -3,19 +3,16 @@ package com.cloud.examsystem.exam.entity;
 import com.cloud.examsystem.exam.common.StatusType;
 import com.cloud.examsystem.exam.model.Question;
 import com.cloud.examsystem.user.entity.User;
-import javassist.NotFoundException;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -48,6 +45,7 @@ public class Exam {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Date endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Date creationTimestamp;
 
@@ -57,21 +55,20 @@ public class Exam {
     @Enumerated(EnumType.STRING)
     private StatusType status = StatusType.PASSIVE;
 
-    public Exam(int questionCount,int optionCount){
-       for (int i= 0; i<questionCount;i++){
-            this.question.add(new Question(optionCount,i));
+    public Exam(int questionCount, int optionCount) {
+        for (int i = 0; i < questionCount; i++) {
+            this.question.add(new Question(optionCount, i));
         }
     }
 
-    public Question getQuestionByQuestionNumber(int questionNumber){
-        for (Question q:question){
-            if (q.getNumber()==questionNumber){
+    public Question getQuestionByQuestionNumber(int questionNumber) {
+        for (Question q : question) {
+            if (q.getNumber() == questionNumber) {
                 return q;
             }
         }
         return null;
     }
-
 
 
 }

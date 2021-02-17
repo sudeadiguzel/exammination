@@ -8,6 +8,7 @@
     <form method="POST" th:object="${data}" action="/instructor/save/">
         <input th:field="${data.startDate}" th:value="${data.startDate}" type="hidden"/>
         <input th:field="${data.endDate}" th:value="${data.endDate}" type="hidden"/>
+        <input th:field="${data.name}" th:value="${data.endDate}" type="hidden"/>
         <div class="card" style="border: 2px solid;" th:name="|question-'${j}'|"
              th:each="question: ${data.question}">
             <div class="card-header">

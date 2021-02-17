@@ -43,7 +43,7 @@ public class ExamController {
 
     @GetMapping("/list/pending")
     public String getPendingExamListPage() {
-        return "/exam/pending_list";
+        return "exam/pending_list";
     }
 
     @PostMapping("/list/pending")
@@ -54,7 +54,7 @@ public class ExamController {
 
        @GetMapping("/list/actives")
     public String getActiveExamListPage() {
-        return "/exam/active_list";
+        return "exam/active_list";
     }
 
     @PostMapping("/list/actives")
@@ -65,7 +65,7 @@ public class ExamController {
 
     @GetMapping("/list/completed")
     public String getCompletedExamListPage() {
-        return "/exam/completed_list";
+        return "exam/completed_list";
     }
 
     @PostMapping("/list/completed")

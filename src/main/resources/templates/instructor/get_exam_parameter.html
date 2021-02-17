@@ -18,6 +18,12 @@
 </div>
 <form method="GET" id="create-form" th:object="${counts}" th:action="@{/instructor/exam/create}" novalidate>
     <div class="form-group row">
+        <label for="name" class="col-2 col-form-label">Exam name</label>
+        <div class="col-10">
+            <input class="form-control" type="text" id="name" th:name="name">
+        </div>
+    </div>
+    <div class="form-group row">
         <label for="start" class="col-2 col-form-label">Exam Start Time</label>
         <div class="col-10">
             <input class="form-control" type="datetime-local" id="start" th:name="startDate">
