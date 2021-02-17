@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared-templates/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body layout:fragment="createExamContent">
+<div class="container text-center">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Instructor Controller Panel</h2>
+            <h5>Create Exam Parameters</h5>
+        </div>
+    </div>
+
+</div>
+<form method="GET" id="create-form" th:object="${counts}" th:action="@{/instructor/exam/create}" novalidate>
+    <div class="form-group row">
+        <label for="name" class="col-2 col-form-label">Exam name</label>
+        <div class="col-10">
+            <input class="form-control" type="text" required id="name" th:name="name">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="start" class="col-2 col-form-label">Exam Start Time</label>
+        <div class="col-10">
+            <input class="form-control" required type="datetime-local" id="start" th:name="startDate">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="end" class="col-2 col-form-label">Exam Finish Time</label>
+        <div class="col-10">
+            <input class="form-control" type="datetime-local" id="end" th:name="endDate" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label th:for="|questionCount|">Question Count</label>
+        <input type="number" class="form-control" th:id="|questionCount|" th:name="|questionCount|" required>
+    </div>
+    <div class="form-group">
+        <label th:for="|optionCount|">Option Count</label>
+        <input type="number" class="form-control" th:id="|optionCount|" th:name="|optionCount|" required>
+    </div>
+    <button type="submit" class="btn btn-squared-default btn-primary"  >Submit</button>
+</form>
+<th:block layout:fragment="script">
+<script>
+let today = new Date().toISOString().slice(0, 19)
+
+var start = document.getElementById('start');
+var end = document.getElementById('end');
+start.min=today;
+start.addEventListener('change', function() {
+
+    if (start.value)
+        end.min = start.value;
+}, false);
+end.addEventListener('change', function() {
+    if (end.value)
+        start.max = end.value;
+}, false);
+
+</script>
+</th:block>
+</body>
+</html>

@@ -1,11 +1,15 @@
 package com.cloud.examsystem.grade.entity;
 
 import com.cloud.examsystem.exam.entity.Exam;
+import com.cloud.examsystem.exam.model.QuestionAnswerDTO;
 import com.cloud.examsystem.user.entity.Student;
+import com.cloud.examsystem.user.entity.User;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -22,9 +26,11 @@ public class Grade {
 
     @Column(columnDefinition = "json")
     @Type(type = "jsonb")
-    private Map<String, Object> solves;
+    private List<QuestionAnswerDTO> solves = new ArrayList<>();
 
     private Double score;
 
+    @ManyToOne
+    private User student;
 }
 

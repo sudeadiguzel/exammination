@@ -47,4 +47,10 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public User getUser(){
+     return this.user;
+    }
+
+    public boolean isInstructor(){return this.user.isInstructor();}
 }

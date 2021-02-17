@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared-templates/layout">
+<head>
+    <meta charset="utf-8" />
+    <title>My Pending Exams</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body layout:fragment="studentExamListContent">
+
+<div class="container">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Instructor Controller Panel</h2>
+                <h5>All Completed and Rated Exams</h5>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" id="table">
+            <thead>
+            <tr>
+                <th>Exam Id</th>
+                <th>Exam Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script src="../static/js/jquery.dataTables.min.js" th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script src="../static/js/dataTables.bootstrap4.min.js" th:src="@{/js/dataTables.bootstrap4.min.js}"></script>
+    <script src="../static/js/datatableInitializer.js" th:src="@{/js/datatableInitializer.js}"></script>
+    <script>
+        $(document).ready(function () {
+            DatatableUtils.initializer("#table", {
+                ajax: {
+                    "url": "/instructor/exam/completed",
+                    "type": "POST"
+                },
+                columnDefs: [{
+                    "targets": 0,
+                    "data": "id",
+                }, {
+                    "targets": 1,
+                    "data": "name",
+                }, {
+                    "targets": 2,
+                    "data": "startDate",
+                    "render": DatatableUtils.renderDateTime("startDate")
+                }, {
+                    "targets": 3,
+                    "data": "endDate",
+                    "render": DatatableUtils.renderDateTime("endDate")
+                },{
+                    "targets": 4,
+                    "data": "status",
+                    "render": DatatableUtils.renderStatus("status")
+                },{
+                    "targets": 5,
+                    "data": "id",
+                    "render": function (data) {
+                        var buttons="";
+                        buttons+=('<a href="/instructor/exam/resultDetail/' + data + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></i></a>');
+                        return buttons;
+                    }},]
+            });
+        });
+    </script>
+</th:block>
+</body>
+</html>

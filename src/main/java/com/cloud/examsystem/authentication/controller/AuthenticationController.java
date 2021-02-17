@@ -27,6 +27,11 @@ public class AuthenticationController {
     private final UserAuthService userAuthService;
 
 
+    @GetMapping
+    public String root(){
+        return "redirect:/login";
+    }
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/session")
     public ResponseEntity<?> getSession(Authentication authentication) {
@@ -72,8 +77,53 @@ public class AuthenticationController {
         return "login";
     }
 
-    @GetMapping("/homepage")
+
+
+    @GetMapping("/common/homepage")
     public String getHomePage(Model model){
-        return "homepage";
+        int a=1;
+        if(userAuthService.getCurrentUser().isInstructor()){
+            return "redirect:/instructor";
+        }
+        return "redirect:/exam/home";
     }
+
+    @GetMapping("/common/pending")
+    public String getPendingExamListPage(Model model){
+        if(userAuthService.getCurrentUser().isInstructor()){
+            //TODO
+            return "redirect:/instructor/exam/pendings";
+        }
+        return "redirect:/exam/list/pending";
+    }
+
+    @GetMapping("/common/all")
+    public String getAllPage(Model model){
+        if(userAuthService.getCurrentUser().isInstructor()){
+            return "redirect:/instructor";
+        }
+        return "redirect:/exam/home";
+    }
+    @GetMapping("/common/actives")
+    public String getActivesPage(Model model){
+        if(userAuthService.getCurrentUser().isInstructor()){
+            return "redirect:/instructor/exam/actives";
+        }
+        return "redirect:/exam/list/actives";
+    }
+    @GetMapping("/common/completed")
+    public String getCompletedExamsListPage(Model model){
+        if(userAuthService.getCurrentUser().isInstructor()){
+            //TODO
+            return "redirect:/instructor/exam/completed";
+        }
+
+        return "redirect:/exam/list/completed";
+    }
+
+//    @GetMapping()
+//    public String Index(){
+//        return "redirect: /login";
+//
+//    }
 }

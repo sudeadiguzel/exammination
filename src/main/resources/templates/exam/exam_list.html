@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="shared-templates/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body layout:fragment="examContent">
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped" id="table">
+        <thead>
+        <tr>
+            <th>Sınav Id</th>
+            <th>Sınav İsmi</th>
+            <th>Başlangıç Tarihi</th>
+            <th>Bitiş Tarihi</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<th:block layout:fragment="script">
+    <script src="../../static/js/jquery.dataTables.min.js" th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script src="../../static/js/dataTables.bootstrap4.min.js" th:src="@{/js/dataTables.bootstrap4.min.js}"></script>
+    <script src="../../static/js/datatableInitializer.js" th:src="@{/js/datatableInitializer.js}"></script>
+    <script>
+
+    </script>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script src="../static/js/jquery.dataTables.min.js" th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script src="../static/js/dataTables.bootstrap4.min.js" th:src="@{/js/dataTables.bootstrap4.min.js}"></script>
+    <script src="../static/js/datatableInitializer.js" th:src="@{/js/datatableInitializer.js}"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            DatatableUtils.initializer("#table", {
+                ajax: {
+                    "url": "/exam/list",
+                    "type": "POST"
+                },
+                columnDefs: [{
+                    "targets": 0,
+                    "data": "id",
+                    // "render": DatatableUtils.renderRoute('/exam')
+                }, {
+                    "targets": 1,
+                    "data": "name",
+                }, {
+                    "targets": 2,
+                    "data": "startDate",
+                }, {
+                    "targets": 3,
+                    "data": "endDate",
+                },{
+                    "targets": 5,
+                    "data": "id",
+                    "render": function (data) {
+                        var buttons=[];
+                        var $gradeService = [[$gradeService]]
+                        buttons.push('<a href="/instructor/exam/detail/' + data + '" data-toggle=\'tooltip\' title=\'Edit\'><i class=\'fa fa-pencil text-info\'></i></a>');
+                        buttons.push('<a href="/instructor/exam/resultDetail/' + data + '" data-toggle=\'tooltip\' title=\'Grades\'><i class=\'fas fa-calendar-week\'></i></a>');
+                        return buttons;
+                    }}, ]
+            });
+        });
+    </script>
+</th:block>
+</body>
+</html>
