@@ -22,7 +22,7 @@
             <div class="card-body" th:each="option: ${question.optionList}">
 
 
-                <div th:styleappend="${exam.question[__${question.number}__].optionList[__${option.index}__].correct} != ${grade.solves[__${question.number}__].answers[__${option.index}__].correct}? 'background-color:#ff9999-':''">
+                <div th:styleappend="${exam.question[__${question.number}__].optionList[__${option.index}__].correct != grade.solves[__${question.number}__].answers[__${option.index}__].correct}? 'background-color:#ff9999':''">
 
                     <div th:styleappend="${exam.question[__${question.number}__].optionList[__${option.index}__].correct}? 'background-color:#85cc85':''">
                         <div id='block-11' style='padding: 5px;'>
