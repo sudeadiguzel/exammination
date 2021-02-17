@@ -5,7 +5,14 @@
 <head th:replace="layout :: html_head"/>
 <body layout:fragment="examContent">
 <div class="container">
-    <form method="POST" th:object="${exam}" action="/instructor/save/">
+
+    <form method="GET" th:object="${exam}" action="/common/homepage">
+        <div>
+            <label th:for="|questionInput-'${j}'|" class="col-form-label">Name:</label>
+            <label th:text="${exam.name}" class="col-sm-2 col-form-label"></label>
+            <label class="ml-2 col-form-label">Result:</label>
+            <label th:text="${grade.score}" class="col-form-label"></label>
+        </div>
         <div class="card" style="border: 2px solid;" th:name="|question-'${j}'|"
              th:each="question: ${exam.question}">
             <div class="card-header">
@@ -16,6 +23,11 @@
                                th:name="description" class="form-control"
                                th:id="|questionInput-'${j}'|" required th:placeholder="${question.description}"></label>
                     </div>
+                </div>
+                <div class="row">
+                    <label>Score:</label>
+                    <label th:text="${grade.getSolves()[__${question.number}__].studentScore}"
+                           th:id="|questionInput-'${j}'|" ></label>
                 </div>
             </div>
 
