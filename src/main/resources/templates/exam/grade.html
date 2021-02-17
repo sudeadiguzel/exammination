@@ -27,7 +27,7 @@
                 <div class="row">
                     <label>Score:</label>
                     <label th:text="${grade.getSolves()[__${question.number}__].studentScore}"
-                           th:id="|questionInput-'${j}'|" ></label>
+                           th:id="|questionInput-'${j}'|"></label>
                 </div>
             </div>
 
@@ -41,8 +41,7 @@
 
                             <div class="form-group" th:required="true">
                                 <label th:text="${exam.question[__${question.number}__].optionList[__${option.index}__].content}"
-                                       required th:name="content"
-                                       placeholder="Option"/>
+                                       th:name="content"></label>
 
                                 <div class="form-group" th:required="true">
 
