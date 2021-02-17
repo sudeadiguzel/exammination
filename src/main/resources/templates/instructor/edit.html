@@ -7,6 +7,7 @@
 <div class="container">
     <form method="POST" th:object="${data}" action="/instructor/save/" novalidate>
         <input th:field="${data.id}" th:value="${data.id}" type="hidden"/>
+        <input th:field="${data.name}" th:value="${data.name}" type="hidden"/>
         <input th:field="${data.startDate}" th:value="${data.startDate}" type="hidden"/>
         <input th:field="${data.endDate}" th:value="${data.endDate}" type="hidden"/>
         <input th:field="${data.creationTimestamp}" th:value="${data.creationTimestamp}" type="hidden"/>
